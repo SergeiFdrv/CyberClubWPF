@@ -1,0 +1,127 @@
+﻿<Page x:Class="CyberClub.Pages.GamesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
+      xmlns:local="clr-namespace:CyberClub.Pages" 
+      xmlns:data="clr-namespace:CyberClub.Data" 
+      xmlns:res="clr-namespace:CyberClub.AppResources"
+      mc:Ignorable="d" 
+      Style="{StaticResource Pg}" d:DesignWidth="800"
+      Title="GamesPage">
+    <Page.Resources>
+        <Style TargetType="Grid">
+            <Setter Property="Margin" Value="0, 0, 0, 3"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Padding" Value="0, 5" />
+        </Style>
+    </Page.Resources>
+    <StackPanel>
+        <Grid><!--game name-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{x:Static res:Lang.Game}"/>
+            <DockPanel Grid.Column="1">
+                <ComboBox x:Name="GameIDBox" ItemsSource="{DynamicResource gms}" MinWidth="150" Visibility="Collapsed" SelectionChanged="GameIDBox_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=GameID}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                    <ComboBox.Resources>
+                        <col:ArrayList x:Key="gms">
+                            <data:Game GameID="0"/>
+                        </col:ArrayList>
+                    </ComboBox.Resources>
+                </ComboBox>
+                <TextBox x:Name="GameNameText"/>
+            </DockPanel>
+        </Grid>
+        <Grid><!--game path-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{x:Static res:Lang.PathToEXE}"/>
+            <DockPanel Grid.Column="1" FlowDirection="RightToLeft">
+                <Button x:Name="PathButton" Content="{x:Static res:Lang.Add}" MinWidth="150" Click="PathButton_Click"/>
+                <TextBox x:Name="PathText"/>
+            </DockPanel>
+        </Grid>
+        <Grid><!--made by-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{x:Static res:Lang.DevelopedBy}"/>
+            <DockPanel Grid.Column="1" FlowDirection="RightToLeft">
+                <Button x:Name="DevDelButton" Content="{x:Static res:Lang.Delete}" MinWidth="150" Visibility="Collapsed" Click="DevDelButton_Click"/>
+                <Button x:Name="DevButton" Content="{x:Static res:Lang.Add}" MinWidth="150" Click="DevButton_Click"/>
+                <ComboBox x:Name="DevText" FlowDirection="LeftToRight" IsEditable="True"/>
+            </DockPanel>
+        </Grid>
+        <Grid><!--game genre-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{x:Static res:Lang.Genre}"/>
+            <DockPanel Grid.Column="1" FlowDirection="RightToLeft">
+                <Button x:Name="GenreDelButton" Content="{x:Static res:Lang.Delete}" MinWidth="150" Visibility="Collapsed"/>
+                <Button x:Name="GenreButton" Content="{x:Static res:Lang.Add}" MinWidth="150" Click="GenreButton_Click"/>
+                <TextBox x:Name="GenreText"/>
+            </DockPanel>
+        </Grid>
+        <Grid>
+            <!--genres and picture-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="9*"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <ListView x:Name="GenrePicker" ItemsSource="{DynamicResource stuff}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ToggleButton Content="{Binding Path=GenreName}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Resources>
+                    <col:ArrayList x:Key="stuff">
+                        <data:Genre GenreName="action"/>
+                        <data:Genre GenreName="racing"/>
+                    </col:ArrayList>
+                </ListView.Resources>
+            </ListView>
+            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5, 0">
+                <DockPanel>
+                    <ComboBox x:Name="PicIDBox" Padding="5" Visibility="Collapsed"/>
+                    <TextBox x:Name="PicNameText" Padding="4"/>
+                </DockPanel>
+                <Button x:Name="PicButton0" Content="{x:Static res:Lang.Browse}" Click="PicButton0_Click"/>
+                <Button x:Name="PicButton1" Content="{x:Static res:Lang.Add}" Click="PicButton1_Click"/>
+            </StackPanel>
+            <Image x:Name="ImageBox" Grid.Column="2"/>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ToggleButton x:Name="SPToggle" Grid.Column="0" Padding="5" Content="{x:Static res:Lang.SinglePlayer}"/>
+            <ToggleButton x:Name="MPToggle" Grid.Column="1" Padding="5" Content="{x:Static res:Lang.Multiplayer}"/>
+            <Button x:Name="GameButton0" Grid.Column="2" Content="{x:Static res:Lang.Submit}" Visibility="Collapsed" Click="GameButton0_Click"/>
+            <Button x:Name="GameButton1" Grid.Column="3" Content="{x:Static res:Lang.Submit}" Click="GameButton1_Click"/>
+        </Grid>
+    </StackPanel>
+</Page>

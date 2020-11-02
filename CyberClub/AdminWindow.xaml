@@ -1,0 +1,45 @@
+﻿<Window x:Class="CyberClub.AdminWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CyberClub"
+        xmlns:pages="clr-namespace:CyberClub.Pages"
+        xmlns:res="clr-namespace:CyberClub.AppResources"
+        mc:Ignorable="d"
+        Style="{StaticResource Win}"
+        Closing="Window_Closing" Loaded="Window_Loaded"
+        Title="AdminWindow" Width="1100" WindowStartupLocation="CenterScreen" SizeToContent="Height">
+    <Window.Background>
+        <SolidColorBrush Color="Black" Opacity="0.95"/>
+    </Window.Background>
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Admin"/>
+        <TextBlock Grid.Column="1" Text="Page"/>
+        <!---->
+        <!---->
+        <StackPanel Grid.Row="1" Margin="0, 10, 5, 0">
+            <Button x:Name="GamesButton" Margin="0, 0, 0, 3" Content="{x:Static res:Lang.Games}" Click="GamesButton_Click"/>
+            <Button x:Name="AccountsButton" Margin="0, 3" Content="{x:Static res:Lang.Accounts}" Click="AccountsButton_Click"/>
+            <Button x:Name="MessagesButton" Margin="0, 3" Content="{x:Static res:Lang.Messages}" Click="MessagesButton_Click"/>
+            <Button x:Name="LogOutButton" Margin="0, 3" Content="{x:Static res:Lang.LogOut}" Click="LogOutButton_Click"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="0, 10, 5, 0">
+            <StackPanel Orientation="Horizontal">
+                <ToggleButton x:Name="TableTabButton" Content="{x:Static res:Lang.Table}" Checked="TableTabButton_Checked"/>
+                <ToggleButton x:Name="AddTabButton" Content="{x:Static res:Lang.Add}" Checked="AddTabButton_Checked"/>
+                <ToggleButton x:Name="EditTabButton" Content="{x:Static res:Lang.Edit}" Checked="EditTabButton_Checked"/>
+                <ToggleButton x:Name="ReadButton" Content="{x:Static res:Lang.Edit}" Visibility="Collapsed"/>
+            </StackPanel>
+            <Frame x:Name="PageFrame" Grid.Row="1" Grid.Column="1" Margin="0, 10, 0, 0" NavigationUIVisibility="Hidden"/>
+        </StackPanel>
+    </Grid>
+</Window>
