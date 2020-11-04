@@ -19,12 +19,12 @@ namespace CyberClub
             Exit += App_Exit;
         }
 
+        public int UserID { get; set; }
+        public DBContext DB { get; } = new DBContext();
+
         private void App_Exit(object sender, ExitEventArgs e)
         {
             DB.Dispose();
         }
-
-        public int UserID { get; set; }
-        public DBContext DB { get; } = new DBContext();
     }
 }

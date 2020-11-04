@@ -358,6 +358,15 @@ namespace CyberClub.AppResources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Rename.
+        /// </summary>
+        public static string Rename {
+            get {
+                return ResourceManager.GetString("Rename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Rename developer?.
         /// </summary>
         public static string RenameDeveloperPrompt {

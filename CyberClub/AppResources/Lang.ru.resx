@@ -216,6 +216,9 @@
   <data name="PathToEXE" xml:space="preserve">
     <value>Путь к .exe</value>
   </data>
+  <data name="Rename" xml:space="preserve">
+    <value>Переименовать</value>
+  </data>
   <data name="RenameDeveloperPrompt" xml:space="preserve">
     <value>Переименовать разработчика?</value>
   </data>

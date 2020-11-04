@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -25,8 +26,9 @@ namespace CyberClub.Pages
         {
             InitializeComponent();
             GameIDBox.ItemsSource = new System.Collections.ArrayList(Global.DB.Games.ToList());
-            DevText.ItemsSource = new System.Collections.ArrayList(Global.DB.Devs.ToList());
+            DevIDBox.ItemsSource = new System.Collections.ArrayList(Global.DB.Devs.ToList());
             GenrePicker.ItemsSource = new System.Collections.ArrayList(Global.DB.Genres.ToList());
+            PicIDBox.ItemsSource = new System.Collections.ArrayList(Global.DB.Pics.ToList());
         }
 
         #region Properties
@@ -38,21 +40,33 @@ namespace CyberClub.Pages
             get => _IsInEditMode;
             set
             {
+                GameIDBox.SelectedItem =
+                DevIDBox.SelectedItem =
+                PicIDBox.SelectedItem = null;
                 if (_IsInEditMode = value)
                 {
                     GameIDBox.Visibility = DevDelButton.Visibility =
                     GenreDelButton.Visibility = PicIDBox.Visibility =
+                    GameButton0.Visibility =
                         Visibility.Visible;
-                    PathButton.Content = DevButton.Content =
-                    GenreButton.Content = AppResources.Lang.Edit;
+                    DevButton.Content =
+                    GenreButton.Content =
+                    PicButton0.Content = AppResources.Lang.Rename;
+                    PicButton1.Content = AppResources.Lang.Delete;
+                    GameButton0.Visibility = Visibility.Visible;
+                    GameButton1.Content = AppResources.Lang.Delete;
                 }
                 else
                 {
                     GameIDBox.Visibility = DevDelButton.Visibility =
                     GenreDelButton.Visibility = PicIDBox.Visibility =
+                    GameButton0.Visibility =
                         Visibility.Collapsed;
-                    PathButton.Content = DevButton.Content =
-                    GenreButton.Content = AppResources.Lang.Add;
+                    DevButton.Content =
+                    GenreButton.Content =
+                    PicButton1.Content = AppResources.Lang.Add;
+                    PicButton0.Content = AppResources.Lang.Browse;
+                    GameButton1.Content = AppResources.Lang.Add;
                 }
             }
         }
@@ -61,52 +75,20 @@ namespace CyberClub.Pages
         #region Name
         private void GameIDBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         { // Выбор редактируемой записи об игре
-            if (!int.TryParse(GameIDBox.Text, out int id))
+            if (!(GameIDBox.SelectedItem is Data.Game game)) return;
+            GameNameText.Text = game.GameName;
+            PathText.Text = game.GameLink;
+            DevIDBox.SelectedIndex = DevIDBox.Items.IndexOf(game.Dev);
+            PicIDBox.SelectedIndex = PicIDBox.Items.IndexOf(game.Pic);
+            SPToggle.IsChecked = game.Singleplayer;
+            MPToggle.IsChecked = game.Multiplayer;
+            // Subs, Rating
+            GenrePicker.UnselectAll();
+
+            foreach (var g in game.Genres)
             {
-                GameNameText.Text = string.Empty;
-                GameNameText.IsEnabled = false;
-                //GEditSubsN.Text = GEditRatesN.Text = $"{0}";
-                //GEditRatingN.Text = $"{0.0}";
-                return;
+                GenrePicker.SelectedItems.Add(g);
             }
-            GameNameText.IsEnabled = true;
-            Data.Game game = GameIDBox.SelectedItem as Data.Game;
-            /*
-            using (SqlConnection conn = new SqlConnection(LoginForm.CS))
-            {
-                if (!ConnOpen(conn)) return;
-                SqlCommand command = conn.CreateCommand();
-                command.CommandText = "SELECT TOP 1 gamename, gamelink, gamepic, " +
-                    "singleplayer, multiplayer, devname, COUNT(who) AS subs, " +
-                    "COUNT(rate) AS rates, CONVERT(varchar, AVG(CAST(rate AS float))) " +
-                    "AS rating FROM games LEFT JOIN subscriptions ON gameid = game " +
-                    "LEFT JOIN devs ON madeby = devid WHERE gameid = @gid GROUP BY " +
-                    "multiplayer, singleplayer, gamepic, gamelink, " +
-                    "devname, gamename, gameid";
-                command.Parameters.Add(new SqlParameter("@gid", id));
-                SqlDataReader dataReader = command.ExecuteReader();
-                if (dataReader.Read())
-                {
-                    GEditName.Text = dataReader["gamename"].ToString();
-                    GEditLink.Text = dataReader["gamelink"].ToString();
-                    GEditDev.Text = dataReader["devname"].ToString();
-                    GEditPicID.Text = dataReader["gamepic"].ToString();
-                    GEditSingleCB.Checked = (bool)dataReader["singleplayer"];
-                    GEditMultiCB.Checked = (bool)dataReader["multiplayer"];
-                    GEditSubsN.Text = dataReader["subs"].ToString();
-                    GEditRatesN.Text = dataReader["rates"].ToString();
-                    GEditRatingN.Text = dataReader["rating"].ToString();
-                    dataReader.Close();
-                    command.CommandText = "SELECT genrename FROM gamegenre " +
-                        "LEFT JOIN genres ON genre = genreid WHERE game = @gid";
-                    dataReader = command.ExecuteReader();
-                    for (int i = 0; i < GEditGenresCLB.Items.Count; i++)
-                        GEditGenresCLB.SetItemChecked(i, false);
-                    while (dataReader.Read())
-                        GEditGenresCLB.SetItemChecked(GEditGenresCLB.Items.IndexOf(
-                            dataReader["genrename"].ToString()), true);
-                }
-            }*/
         }
         #endregion
 
@@ -123,6 +105,11 @@ namespace CyberClub.Pages
         #endregion
 
         #region Developer
+        private void DevIDBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DevText.Text = (DevIDBox.SelectedItem as Data.Dev)?.DevName;
+        }
+
         private void DevButton_Click(object sender, RoutedEventArgs e)
         {
             if (IsInEditMode)
@@ -131,7 +118,7 @@ namespace CyberClub.Pages
             }
             else
             {// Записать разработчика в БД
-                if (AddGetDev(DevText.SelectedItem.ToString()) is null) Voice.Say(AppResources.Lang.AddError);
+                if (AddGetDev(DevText.Text) is null) Voice.Say(AppResources.Lang.AddError);
                 DevText.Text = string.Empty;
             }
         }
@@ -228,22 +215,29 @@ namespace CyberClub.Pages
         }
 
         private void GameButton1_Click(object sender, RoutedEventArgs e)
-        { // Добавить в базу новую игру
-            if (GameNameText.Text.Length == 0) return;
-            ICollection<Data.Genre> genres = (ICollection<Data.Genre>)Global.DB.Genres
-                .Select(g => GenrePicker.SelectedItems.Contains(g));
-            Data.Game game = new Data.Game
-            {
-                GameName = GameNameText.Text,
-                MadeBy = AddGetDev(DevText.Text)?.DevID,
-                GameLink = PathText.Text,
-                GamePic = AddGetPic(PicNameText.Text)?.PicID,
-                Singleplayer = SPToggle.IsChecked,
-                Multiplayer = MPToggle.IsChecked,
-                Genres = genres
-            };
-            game = Global.DB.Games.Add(game);
-            Voice.Say(AppResources.Lang.GameAddedToDB);
+        {
+            if (IsInEditMode)
+            { // Удалить игру
+
+            }
+            else
+            { // Добавить в базу новую игру
+                if (GameNameText.Text.Length == 0) return;
+                ICollection<Data.Genre> genres = (ICollection<Data.Genre>)Global.DB.Genres
+                    .Select(g => GenrePicker.SelectedItems.Contains(g));
+                Data.Game game = new Data.Game
+                {
+                    GameName = GameNameText.Text,
+                    MadeBy = AddGetDev(DevText.Text)?.DevID,
+                    GameLink = PathText.Text,
+                    GamePic = AddGetPic(PicNameText.Text)?.PicID,
+                    Singleplayer = SPToggle.IsChecked,
+                    Multiplayer = MPToggle.IsChecked,
+                    Genres = genres
+                };
+                game = Global.DB.Games.Add(game);
+                Voice.Say(AppResources.Lang.GameAddedToDB);
+            }
         }
         #endregion
     }
