@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CyberClub.Controls;
 
 namespace CyberClub.Pages
 {
@@ -25,10 +26,10 @@ namespace CyberClub.Pages
         public GamesPage()
         {
             InitializeComponent();
-            GameIDBox.ItemsSource = new System.Collections.ArrayList(Global.DB.Games.ToList());
-            DevIDBox.ItemsSource = new System.Collections.ArrayList(Global.DB.Devs.ToList());
-            GenrePicker.ItemsSource = new System.Collections.ArrayList(Global.DB.Genres.ToList());
-            PicIDBox.ItemsSource = new System.Collections.ArrayList(Global.DB.Pics.ToList());
+            GameIDBox.ItemsSource = Global.DB.Games.ToList();
+            DevIDBox.ItemsSource = Global.DB.Devs.ToList();
+            UpdateGenrePickerItems();
+            PicIDBox.ItemsSource = Global.DB.Pics.ToList();
         }
 
         #region Properties
@@ -83,11 +84,11 @@ namespace CyberClub.Pages
             SPToggle.IsChecked = game.Singleplayer;
             MPToggle.IsChecked = game.Multiplayer;
             // Subs, Rating
-            GenrePicker.UnselectAll();
-
-            foreach (var g in game.Genres)
+            // Genres
+            foreach (InteractiveListItem i in GenrePicker.Items)
             {
-                GenrePicker.SelectedItems.Add(g);
+                i.IsIncluded = game.Genres
+                    .FirstOrDefault(g => g.GenreName == i.Name) is Data.Genre;
             }
         }
         #endregion
@@ -148,6 +149,12 @@ namespace CyberClub.Pages
         #endregion
 
         #region Genre
+        private void UpdateGenrePickerItems()
+        {
+            GenrePicker.ItemsSource = (from i in Global.DB.Genres
+                             select new InteractiveListItem { Name = i.GenreName }).ToList();
+        }
+
         private void GenreButton_Click(object sender, RoutedEventArgs e)
         { // Записать жанр в БД
             if (GenreText.Text.Length == 0) return;
@@ -156,6 +163,13 @@ namespace CyberClub.Pages
                 GenreName = GenreText.Text
             });
             GenreText.Text = string.Empty;
+            Global.DB.SaveChanges();
+            UpdateGenrePickerItems();
+        }
+
+        private void GenrePicker_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
         }
         #endregion
 
@@ -197,7 +211,8 @@ namespace CyberClub.Pages
         { // Добавить картинку в БД
             if (name.Length == 0) return null;
             ImageSourceConverter imageSourceConverter = new ImageSourceConverter();
-            byte[] imageBin = (byte[])imageSourceConverter.ConvertTo(ImageBox.Source, typeof(byte[]));
+            byte[] imageBin = 
+                (byte[])imageSourceConverter.ConvertTo(ImageBox.Source, typeof(byte[]));
             Data.Pic pic = new Data.Pic
             {
                 PicName = PicNameText.Text,

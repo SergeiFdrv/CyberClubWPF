@@ -7,6 +7,7 @@
       xmlns:local="clr-namespace:CyberClub.Pages" 
       xmlns:data="clr-namespace:CyberClub.Data" 
       xmlns:res="clr-namespace:CyberClub.AppResources"
+      xmlns:control="clr-namespace:CyberClub.Controls"
       mc:Ignorable="d" 
       Style="{StaticResource Pg}" d:DesignWidth="800"
       Title="GamesPage">
@@ -77,36 +78,35 @@
             <DockPanel Grid.Column="1" FlowDirection="RightToLeft">
                 <Button x:Name="GenreDelButton" Content="{x:Static res:Lang.Delete}" MinWidth="150" Visibility="Collapsed"/>
                 <Button x:Name="GenreButton" Content="{x:Static res:Lang.Add}" MinWidth="150" Click="GenreButton_Click"/>
-                <TextBox x:Name="GenreText" IsEnabled="False"/>
+                <TextBox x:Name="GenreText" FlowDirection="LeftToRight"/>
             </DockPanel>
         </Grid>
-        <Grid>
-            <!--genres and picture-->
+        <Grid><!--genres and picture-->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="9*"/>
                 <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
-            <ListView x:Name="GenrePicker" ItemsSource="{DynamicResource stuff}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                <ListView.ItemsPanel>
+            <ListView x:Name="GenrePicker" ItemsSource="{DynamicResource stuff}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MaxHeight="125" SelectionChanged="GenrePicker_SelectionChanged">
+                <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel Orientation="Horizontal"/>
                     </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.ItemTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
-                            <ToggleButton Content="{Binding Path=GenreName}"/>
+                            <ToggleButton Content="{Binding Name}" IsChecked="{Binding IsIncluded}"/>
                             <TextBlock Text="select" TextAlignment="Center"/>
                         </StackPanel>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-                <ListView.Resources>
+                </ListBox.ItemTemplate>
+                <ListBox.Resources>
                     <col:ArrayList x:Key="stuff">
-                        <data:Genre GenreName="action"/>
-                        <data:Genre GenreName="racing"/>
+                        <control:InteractiveListItem Name="action" IsIncluded="True"/>
+                        <control:InteractiveListItem Name="racing" IsIncluded="False"/>
                     </col:ArrayList>
-                </ListView.Resources>
+                </ListBox.Resources>
             </ListView>
             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5, 0">
                 <DockPanel>
