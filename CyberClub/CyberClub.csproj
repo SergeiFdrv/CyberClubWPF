@@ -97,6 +97,7 @@
     <Compile Include="Controls\InteractiveListItem.cs" />
     <Compile Include="Data\Subscription.cs" />
     <Compile Include="Data\User.cs" />
+    <Compile Include="Pages\AdminEditorPage.cs" />
     <Compile Include="Pages\GamesPage.xaml.cs">
       <DependentUpon>GamesPage.xaml</DependentUpon>
     </Compile>

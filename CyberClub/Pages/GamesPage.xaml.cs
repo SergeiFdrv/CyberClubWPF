@@ -21,7 +21,7 @@ namespace CyberClub.Pages
     /// <summary>
     /// Логика взаимодействия для GamesPage.xaml
     /// </summary>
-    public partial class GamesPage : Page
+    public partial class GamesPage : AdminEditorPage
     {
         public GamesPage()
         {
@@ -32,43 +32,51 @@ namespace CyberClub.Pages
             PicIDBox.ItemsSource = Global.DB.Pics.ToList();
         }
 
-        #region Properties
-        private static App Global => Application.Current as App;
-
-        private bool _IsInEditMode;
-        public bool IsInEditMode
+        #region Override
+        protected override void SetEditMode(bool value)
         {
-            get => _IsInEditMode;
-            set
+            GameIDBox.SelectedItem =
+            DevIDBox.SelectedItem =
+            PicIDBox.SelectedItem = null;
+            if (_IsInEditMode = value)
             {
-                GameIDBox.SelectedItem =
-                DevIDBox.SelectedItem =
-                PicIDBox.SelectedItem = null;
-                if (_IsInEditMode = value)
-                {
-                    GameIDBox.Visibility = DevDelButton.Visibility =
-                    GenreDelButton.Visibility = PicIDBox.Visibility =
-                    GameButton0.Visibility =
-                        Visibility.Visible;
-                    DevButton.Content =
-                    GenreButton.Content =
-                    PicButton0.Content = AppResources.Lang.Rename;
-                    PicButton1.Content = AppResources.Lang.Delete;
-                    GameButton0.Visibility = Visibility.Visible;
-                    GameButton1.Content = AppResources.Lang.Delete;
-                }
-                else
-                {
-                    GameIDBox.Visibility = DevDelButton.Visibility =
-                    GenreDelButton.Visibility = PicIDBox.Visibility =
-                    GameButton0.Visibility =
-                        Visibility.Collapsed;
-                    DevButton.Content =
-                    GenreButton.Content =
-                    PicButton1.Content = AppResources.Lang.Add;
-                    PicButton0.Content = AppResources.Lang.Browse;
-                    GameButton1.Content = AppResources.Lang.Add;
-                }
+                GameIDBox.Visibility = DevDelButton.Visibility =
+                GenreDelButton.Visibility = PicIDBox.Visibility =
+                GameButton0.Visibility =
+                    Visibility.Visible;
+                DevButton.Content =
+                GenreButton.Content =
+                PicButton0.Content = AppResources.Lang.Rename;
+                PicButton1.Content = AppResources.Lang.Delete;
+                GameButton0.Visibility = Visibility.Visible;
+                GameButton1.Content = AppResources.Lang.Delete;
+            }
+            else
+            {
+                GameIDBox.Visibility = DevDelButton.Visibility =
+                GenreDelButton.Visibility = PicIDBox.Visibility =
+                GameButton0.Visibility =
+                    Visibility.Collapsed;
+                DevButton.Content =
+                GenreButton.Content =
+                PicButton1.Content = AppResources.Lang.Add;
+                PicButton0.Content = AppResources.Lang.Browse;
+                GameButton1.Content = AppResources.Lang.Add;
+                ClearFields();
+            }
+        }
+        #endregion
+
+        #region Common
+        // TODO: DRY. Наплодить методов
+        private void ClearFields()
+        {
+            GameNameText.Text = PathText.Text = string.Empty;
+            DevIDBox.SelectedItem = PicIDBox.SelectedItem = null;
+            SPToggle.IsChecked = MPToggle.IsChecked = false;
+            foreach (InteractiveListItem i in GenrePicker.Items)
+            {
+                i.IsIncluded = false;
             }
         }
         #endregion
@@ -79,8 +87,8 @@ namespace CyberClub.Pages
             if (!(GameIDBox.SelectedItem is Data.Game game)) return;
             GameNameText.Text = game.GameName;
             PathText.Text = game.GameLink;
-            DevIDBox.SelectedIndex = DevIDBox.Items.IndexOf(game.Dev);
-            PicIDBox.SelectedIndex = PicIDBox.Items.IndexOf(game.Pic);
+            DevIDBox.SelectedItem = game.Dev;
+            PicIDBox.SelectedItem = game.Pic;
             SPToggle.IsChecked = game.Singleplayer;
             MPToggle.IsChecked = game.Multiplayer;
             // Subs, Rating
