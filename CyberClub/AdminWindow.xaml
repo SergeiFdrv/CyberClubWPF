@@ -8,7 +8,7 @@
         xmlns:res="clr-namespace:CyberClub.AppResources"
         mc:Ignorable="d"
         Style="{StaticResource Win}"
-        Closing="Window_Closing" Loaded="Window_Loaded"
+        Loaded="Window_Loaded" Closing="Window_Closing" SizeChanged="Window_SizeChanged"
         Title="AdminWindow" Width="1100" WindowStartupLocation="CenterScreen" SizeToContent="Height">
     <Window.Background>
         <SolidColorBrush Color="Black" Opacity="0.95"/>
@@ -27,10 +27,10 @@
         <!---->
         <!---->
         <StackPanel Grid.Row="1" Margin="0, 10, 5, 0">
-            <Button x:Name="GamesButton" Margin="0, 0, 0, 3" Content="{x:Static res:Lang.Games}" Click="GamesButton_Click"/>
-            <Button x:Name="AccountsButton" Margin="0, 3" Content="{x:Static res:Lang.Accounts}" Click="AccountsButton_Click"/>
-            <Button x:Name="MessagesButton" Margin="0, 3" Content="{x:Static res:Lang.Messages}" Click="MessagesButton_Click"/>
-            <Button x:Name="LogOutButton" Margin="0, 3" Content="{x:Static res:Lang.LogOut}" Click="LogOutButton_Click"/>
+            <ToggleButton x:Name="GamesButton" Margin="0, 0, 0, 3" Content="{x:Static res:Lang.Games}" Checked="GamesButton_Checked"/>
+            <ToggleButton x:Name="AccountsButton" Margin="0, 3" Content="{x:Static res:Lang.Accounts}" Checked="AccountsButton_Checked"/>
+            <ToggleButton x:Name="MessagesButton" Margin="0, 3" Content="{x:Static res:Lang.Messages}" Checked="MessagesButton_Checked"/>
+            <ToggleButton x:Name="LogOutButton" Margin="0, 3" Content="{x:Static res:Lang.LogOut}" Click="LogOutButton_Click"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1" Margin="0, 10, 5, 0">
             <StackPanel Orientation="Horizontal">
@@ -40,6 +40,7 @@
                 <ToggleButton x:Name="ReadButton" Content="{x:Static res:Lang.Edit}" Visibility="Collapsed"/>
             </StackPanel>
             <Frame x:Name="PageFrame" Grid.Row="1" Grid.Column="1" Margin="0, 10, 0, 0" NavigationUIVisibility="Hidden"/>
+            <DataGrid x:Name="DataGridTable" Grid.Row="1" Grid.Column="1" Visibility="Collapsed"/>
         </StackPanel>
     </Grid>
 </Window>
