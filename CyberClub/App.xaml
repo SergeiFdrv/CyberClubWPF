@@ -2,7 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:CyberClub"
-             StartupUri="LoginWindow.xaml">
+             StartupUri="LoginWindow.xaml"
+             LoadCompleted="Application_LoadCompleted" Exit="App_Exit">
     <Application.Resources>
         <SolidColorBrush x:Key="CommonForeColor" Color="White"/>
         <SolidColorBrush x:Key="CommonBackColor" Color="Black"/>
@@ -33,6 +34,7 @@
         </Style>
         <Style TargetType="ComboBox">
             <Setter Property="Background" Value="Transparent" />
+            <EventSetter Event="MouseEnter" Handler="ComboBox_MouseEnter"/>
         </Style>
         <Style x:Key="ListBoxStyle" TargetType="ListBox">
             <Setter Property="Background" Value="Transparent" />

@@ -28,6 +28,60 @@ namespace CyberClub
 
         private GamesPage GamesPage { get; } = new GamesPage();
 
+        private List<DataGridTextColumn> GamesDGColumns { get; } =
+            new List<DataGridTextColumn>
+        {
+                new DataGridTextColumn
+                {
+                    Header = "ID",
+                    Binding = new Binding("GameID")
+                },
+                new DataGridTextColumn
+                {
+                    Header = "Name",
+                    Binding = new Binding("GameName")
+                }
+        };
+
+        //private AccountsPage AccountsPage { get; } = new AccountsPage();
+
+        private List<DataGridTextColumn> AccountsDGColumns { get; } =
+            new List<DataGridTextColumn>
+        {
+                new DataGridTextColumn
+                {
+                    Header = "ID",
+                    Binding = new Binding("UserID")
+                },
+                new DataGridTextColumn
+                {
+                    Header = "Name",
+                    Binding = new Binding("UserName")
+                }
+        };
+
+        //private MessagesPage MessagesPage { get; } = new MessagesPage();
+
+        private List<DataGridTextColumn> MessagesDGColumns { get; } =
+            new List<DataGridTextColumn>
+        {
+                new DataGridTextColumn
+                {
+                    Header = "ID",
+                    Binding = new Binding("MessageID")
+                },
+                new DataGridTextColumn
+                {
+                    Header = "From",
+                    Binding = new Binding("UserName")
+                },
+                new DataGridTextColumn
+                {
+                    Header = "Topic",
+                    Binding = new Binding("Briefly")
+                }
+        };
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             GamesButton.IsChecked = TableTabButton.IsChecked = true;
@@ -43,11 +97,21 @@ namespace CyberClub
 
         }
 
+        private void SetDGColumns(IEnumerable<DataGridTextColumn> columns)
+        {
+            DataGridTable.Columns.Clear();
+            foreach (var i in columns)
+            {
+                DataGridTable.Columns.Add(i);
+            }
+        }
+
         private void GamesButton_Checked(object sender, RoutedEventArgs e)
         {
             AccountsButton.IsChecked = MessagesButton.IsChecked = GamesButton.IsEnabled =
                 !(AccountsButton.IsEnabled = MessagesButton.IsEnabled = true);
             DataGridTable.ItemsSource = Global.DB.Games.ToList();
+            SetDGColumns(GamesDGColumns);
             PageFrame.Navigate(GamesPage);
         }
 
@@ -56,6 +120,7 @@ namespace CyberClub
             GamesButton.IsChecked = MessagesButton.IsChecked = AccountsButton.IsEnabled =
                 !(GamesButton.IsEnabled = MessagesButton.IsEnabled = true);
             DataGridTable.ItemsSource = Global.DB.Users.ToList();
+            SetDGColumns(AccountsDGColumns);
             //PageFrame.Navigate(AccountsPage);
         }
 
@@ -64,6 +129,7 @@ namespace CyberClub
             GamesButton.IsChecked = AccountsButton.IsChecked = MessagesButton.IsEnabled =
                 !(GamesButton.IsEnabled = AccountsButton.IsEnabled = true);
             DataGridTable.ItemsSource = Global.DB.Feedbacks.ToList();
+            SetDGColumns(MessagesDGColumns);
             //PageFrame.Navigate(MessagesPage);
         }
 

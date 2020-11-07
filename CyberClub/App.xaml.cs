@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using CyberClub.Data;
 
 namespace CyberClub
@@ -16,15 +17,23 @@ namespace CyberClub
     {
         public App() : base()
         {
-            Exit += App_Exit;
         }
 
         public int UserID { get; set; }
         public DBContext DB { get; } = new DBContext();
 
+        private void Application_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+        }
+
         private void App_Exit(object sender, ExitEventArgs e)
         {
             DB.Dispose();
+        }
+
+        private void ComboBox_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            (sender as ComboBox).Focus();
         }
     }
 }

@@ -39,8 +39,8 @@
                 <ToggleButton x:Name="EditTabButton" Content="{x:Static res:Lang.Edit}" Checked="EditTabButton_Checked"/>
                 <ToggleButton x:Name="ReadButton" Content="{x:Static res:Lang.Edit}" Visibility="Collapsed"/>
             </StackPanel>
-            <Frame x:Name="PageFrame" Grid.Row="1" Grid.Column="1" Margin="0, 10, 0, 0" NavigationUIVisibility="Hidden"/>
-            <DataGrid x:Name="DataGridTable" Grid.Row="1" Grid.Column="1" Visibility="Collapsed"/>
+            <Frame x:Name="PageFrame" Margin="0, 10, 0, 0" NavigationUIVisibility="Hidden"/>
+            <DataGrid x:Name="DataGridTable" Visibility="Collapsed" IsReadOnly="True"></DataGrid>
         </StackPanel>
     </Grid>
 </Window>
