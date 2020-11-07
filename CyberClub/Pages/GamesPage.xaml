@@ -13,7 +13,7 @@
       Title="GamesPage">
     <Page.Resources>
         <Style TargetType="Grid">
-            <Setter Property="Margin" Value="0, 0, 0, 3"/>
+            <Setter Property="Margin" Value="0, 0, 0, 5"/>
         </Style>
         <Style TargetType="TextBlock">
             <Setter Property="Padding" Value="0, 5" />
@@ -82,42 +82,49 @@
             </DockPanel>
         </Grid>
         <DockPanel><!--genres and picture-->
-            <Image x:Name="ImageBox" Grid.Column="2" MinWidth="150" DockPanel.Dock="Right"/>
-            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5, 0, 0, 0" MinWidth="150" DockPanel.Dock="Right">
-                <DockPanel>
-                    <ComboBox x:Name="PicIDBox" Padding="5" Visibility="Collapsed">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Path=PicID}"/>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <TextBox x:Name="PicNameText" Padding="4"/>
-                </DockPanel>
-                <Button x:Name="PicButton0" Content="{x:Static res:Lang.Browse}" Click="PicButton0_Click"/>
-                <Button x:Name="PicButton1" Content="{x:Static res:Lang.Add}" Click="PicButton1_Click"/>
+            <Border Background="#4888" DockPanel.Dock="Right" Margin="0, 0, 0, 3" VerticalAlignment="Top">
+                <Image x:Name="ImageBox" Width="150" Height="150"/>
+            </Border>
+            <DockPanel DockPanel.Dock="Top">
+                <StackPanel Orientation="Vertical" Margin="5, 0, 0, 0" MinWidth="150" DockPanel.Dock="Right">
+                    <DockPanel Margin="0, 0, 0, 5">
+                        <ComboBox x:Name="PicIDBox" Padding="5" Visibility="Collapsed" SelectionChanged="PicIDBox_SelectionChanged">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=PicID}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <TextBox x:Name="PicNameText" Padding="4"/>
+                    </DockPanel>
+                    <Button x:Name="PicButton0" Margin="0, 0, 0, 5" Content="{x:Static res:Lang.Browse}" Click="PicButton0_Click"/>
+                    <Button x:Name="PicButton1" Margin="0, 0, 0, 5" Content="{x:Static res:Lang.Add}" Click="PicButton1_Click"/>
+                </StackPanel>
+                <ListView x:Name="GenrePicker" ItemsSource="{DynamicResource stuff}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Height="125" SelectionChanged="GenrePicker_SelectionChanged">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <ToggleButton Content="{Binding Name}" IsChecked="{Binding IsIncluded}"/>
+                                <TextBlock Text="select" TextAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.Resources>
+                        <col:ArrayList x:Key="stuff">
+                            <control:InteractiveListItem Name="action" IsIncluded="True"/>
+                            <control:InteractiveListItem Name="racing" IsIncluded="False"/>
+                        </col:ArrayList>
+                    </ListBox.Resources>
+                </ListView>
+            </DockPanel>
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
+                <TextBlock x:Name="SubsInfoText" Text="Subs: 0   Rates: 0   Avg: 0.0"/>
             </StackPanel>
-            <ListView x:Name="GenrePicker" ItemsSource="{DynamicResource stuff}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MaxHeight="125" SelectionChanged="GenrePicker_SelectionChanged">
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <ToggleButton Content="{Binding Name}" IsChecked="{Binding IsIncluded}"/>
-                            <TextBlock Text="select" TextAlignment="Center"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-                <ListBox.Resources>
-                    <col:ArrayList x:Key="stuff">
-                        <control:InteractiveListItem Name="action" IsIncluded="True"/>
-                        <control:InteractiveListItem Name="racing" IsIncluded="False"/>
-                    </col:ArrayList>
-                </ListBox.Resources>
-            </ListView>
         </DockPanel>
         <Grid>
             <Grid.ColumnDefinitions>

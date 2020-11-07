@@ -246,6 +246,9 @@
   <data name="Subscribe" xml:space="preserve">
     <value>Subscribe</value>
   </data>
+  <data name="SubsRatesAndAvg" xml:space="preserve">
+    <value>Subs: {subs}   Rates: {rates}   Avg: {avg}</value>
+  </data>
   <data name="Table" xml:space="preserve">
     <value>Table</value>
   </data>

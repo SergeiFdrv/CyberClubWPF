@@ -448,6 +448,15 @@ namespace CyberClub.AppResources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Subs: {subs}   Rates: {rates}   Avg: {avg}.
+        /// </summary>
+        public static string SubsRatesAndAvg {
+            get {
+                return ResourceManager.GetString("SubsRatesAndAvg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Table.
         /// </summary>
         public static string Table {

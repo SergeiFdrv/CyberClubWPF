@@ -22,5 +22,7 @@ namespace CyberClub.Pages
         /// Sets the IsInEditMode property
         /// </summary>
         protected abstract void SetEditMode(bool value);
+
+        public abstract void OpenFromTable(int id);
     }
 }
