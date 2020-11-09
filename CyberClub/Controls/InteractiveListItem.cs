@@ -9,28 +9,31 @@ namespace CyberClub.Controls
 {
     public class InteractiveListItem : INotifyPropertyChanged
     {
-        private bool _IsIncluded;
-        public bool IsIncluded
+        private bool _IsTicked;
+        public bool IsTicked
         {
-            get => _IsIncluded;
+            get => _IsTicked;
             set
             {
-                _IsIncluded = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsIncluded"));
+                _IsTicked = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsTicked"));
             }
         }
 
-        private string _Name;
-        public string Name
+        private string _Text;
+        public string Text
         {
-            get => _Name;
+            get => _Text;
             set
             {
-                _Name = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Name"));
+                _Text = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Text"));
             }
         }
+
+        public object Item { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public override string ToString() => Text;
     }
 }

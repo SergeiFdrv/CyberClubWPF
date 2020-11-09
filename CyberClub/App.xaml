@@ -39,7 +39,6 @@
         <Style x:Key="ListBoxStyle" TargetType="ListBox">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="{DynamicResource CommonForeColor}" />
-            <Setter Property="SelectionMode" Value="Multiple" />
         </Style>
         <Style TargetType="ListBox" BasedOn="{StaticResource ListBoxStyle}" />
         <Style TargetType="ListView" BasedOn="{StaticResource ListBoxStyle}" />
