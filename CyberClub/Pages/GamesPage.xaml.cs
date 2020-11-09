@@ -87,14 +87,20 @@ namespace CyberClub.Pages
         }
         #endregion
 
-        #region Name
+        #region Game
+        private void GameIDBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SelectGame();
+        }
+
+        #region Game item details
         private void UpdateGameItems()
         {
             GameIDBox.ItemsSource = Global.DB.Games.ToList();
         }
 
-        private void GameIDBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        { // Выбор редактируемой записи об игре
+        private void SelectGame()
+        {
             if (!(GameIDBox.SelectedItem is Data.Game game)) return;
             GameNameText.Text = game.GameName;
             PathText.Text = game.GameLink;
@@ -105,6 +111,7 @@ namespace CyberClub.Pages
             UpdateGenrePickerItems(game);
             UpdateSubsInfo(game);
         }
+        #endregion
         #endregion
 
         #region Path
@@ -120,11 +127,6 @@ namespace CyberClub.Pages
         #endregion
 
         #region Developer
-        private void UpdateDevItems()
-        {
-            DevIDBox.ItemsSource = Global.DB.Devs.ToList();
-        }
-
         private void DevIDBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DevText.Text = (DevIDBox.SelectedItem as Data.Dev)?.DevName;
@@ -132,21 +134,8 @@ namespace CyberClub.Pages
 
         private void DevButton_Click(object sender, RoutedEventArgs e)
         {
-            if (IsInEditMode)
-            {// Переименовать разработчика в БД
-                if (!string.IsNullOrWhiteSpace(DevText.Text) &&
-                Voice.Say(AppResources.Lang.RenameDeveloperPrompt, MessageBoxButton.YesNo) ==
-                MessageBoxResult.Yes)
-                {
-                    (DevIDBox.SelectedItem as Data.Dev).DevName = DevText.Text;
-                    Global.DB.SaveChanges();
-                }
-            }
-            else
-            {// Записать разработчика в БД
-                if (AddGetDev(DevText.Text) is null) Voice.Say(AppResources.Lang.AddError);
-                DevText.Text = string.Empty;
-            }
+            if (IsInEditMode) RenameDeveloper();
+            else AddDeveloper();
         }
 
         private void DevDelButton_Click(object sender, RoutedEventArgs e)
@@ -160,6 +149,7 @@ namespace CyberClub.Pages
             }
         }
 
+        #region Developer details
         /// <summary>
         /// Если возможно, по имени находит в базе данных разработчика.
         /// Иначе добавляет нового разработчика с именем name и возвращает его.
@@ -179,34 +169,31 @@ namespace CyberClub.Pages
             }
             return dev;
         }
+
+        private void RenameDeveloper()
+        {
+            if (!string.IsNullOrWhiteSpace(DevText.Text) &&
+            Voice.Say(AppResources.Lang.RenameDeveloperPrompt, MessageBoxButton.YesNo) ==
+            MessageBoxResult.Yes)
+            {
+                (DevIDBox.SelectedItem as Data.Dev).DevName = DevText.Text;
+                Global.DB.SaveChanges();
+            }
+        }
+
+        private void AddDeveloper()
+        {
+            if (AddGetDev(DevText.Text) is null) Voice.Say(AppResources.Lang.AddError);
+            DevText.Text = string.Empty;
+        }
+        private void UpdateDevItems()
+        {
+            DevIDBox.ItemsSource = Global.DB.Devs.ToList();
+        }
+        #endregion
         #endregion
 
         #region Genre
-        private void UpdateGenrePickerItems(Data.Game game = null)
-        {
-            GenrePicker.ItemsSource = (from i in Global.DB.Genres
-                             select new InteractiveListItem
-                             { Text = i.GenreName, Item = i }).ToList();
-            if (game != null) foreach (InteractiveListItem i in GenrePicker.Items)
-            {
-                i.IsTicked = game.Genres
-                    .FirstOrDefault(g => g.GenreName == i.Text) is Data.Genre;
-            }
-        }
-
-        private ICollection<Data.Genre> GetTickedGenres()
-        {
-            ICollection<Data.Genre> genres = new List<Data.Genre>();
-            foreach (InteractiveListItem genre in GenrePicker.Items)
-            {
-                if (genre.IsTicked)
-                {
-                    genres.Add(genre.Item as Data.Genre); // yield return: CS1624
-                }
-            }
-            return genres;
-        }
-
         private void GenreButton_Click(object sender, RoutedEventArgs e)
         {
             if (GenreText.Text.Length == 0) return;
@@ -214,13 +201,13 @@ namespace CyberClub.Pages
                 GenrePicker.SelectedItem != null &&
                 Voice.Say(AppResources.Lang.RenameGenrePrompt, MessageBoxButton.YesNo) ==
                 MessageBoxResult.Yes)
-            { // Переименовать жанр
+            { // Rename genre
                 ((GenrePicker.SelectedItem as InteractiveListItem)?.Item as Data.Genre)
                     .GenreName = GenreText.Text;
                 Global.DB.SaveChanges();
             }
             else
-            { // Записать жанр в БД
+            { // Add genre to DB
                 Global.DB.Genres.Add(new Data.Genre
                 {
                     GenreName = GenreText.Text
@@ -249,9 +236,73 @@ namespace CyberClub.Pages
                 ((GenrePicker.SelectedItem as InteractiveListItem)?.Item as Data.Genre)
                 .GenreName;
         }
+
+        #region Genre details
+        private void UpdateGenrePickerItems(Data.Game game = null)
+        {
+            GenrePicker.ItemsSource = (from i in Global.DB.Genres
+                                       select new InteractiveListItem
+                                       { Text = i.GenreName, Item = i }).ToList();
+            if (game != null) foreach (InteractiveListItem i in GenrePicker.Items)
+                {
+                    i.IsTicked = game.Genres
+                        .FirstOrDefault(g => g.GenreName == i.Text) is Data.Genre;
+                }
+        }
+
+        private ICollection<Data.Genre> GetTickedGenres()
+        {
+            ICollection<Data.Genre> genres = new List<Data.Genre>();
+            foreach (InteractiveListItem genre in GenrePicker.Items)
+            {
+                if (genre.IsTicked)
+                {
+                    genres.Add(genre.Item as Data.Genre); // yield return: CS1624
+                }
+            }
+            return genres;
+        }
+        #endregion
         #endregion
 
         #region Picture
+        private void PicIDBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Data.Pic pic = PicIDBox.SelectedItem as Data.Pic;
+            ImageBox.Source = LoadImage(pic?.Bin);
+            PicNameText.Text = pic?.PicName;
+        }
+
+        private void PicButton0_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsInEditMode) RenameImage();
+            else OpenImageFromDialog();
+        }
+
+        private void PicButton1_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsInEditMode) DeleteImage();
+            else AddImage();
+        }
+
+        #region Image details
+        private Data.Pic AddGetPic(string name)
+        { // Добавить картинку в БД
+            if (name.Length == 0) return null;
+            ImageSourceConverter imageSourceConverter = new ImageSourceConverter();
+            byte[] imageBin = 
+                (byte[])imageSourceConverter.ConvertTo(ImageBox.Source, typeof(byte[]));
+            Data.Pic pic = new Data.Pic
+            {
+                PicName = PicNameText.Text,
+                Bin = imageBin
+            };
+            pic = Global.DB.Pics.Add(pic);
+            Global.DB.SaveChanges();
+            UpdatePicItems();
+            return pic;
+        }
+
         private void UpdatePicItems()
         {
             PicIDBox.ItemsSource = Global.DB.Pics.ToList();
@@ -274,79 +325,52 @@ namespace CyberClub.Pages
             return image;
         }
 
-        private void PicIDBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void RenameImage()
         {
-            Data.Pic pic = PicIDBox.SelectedItem as Data.Pic;
-            ImageBox.Source = LoadImage(pic?.Bin);
-            PicNameText.Text = pic?.PicName;
-        }
-
-        private void PicButton0_Click(object sender, RoutedEventArgs e)
-        {
-            if (IsInEditMode)
-            {// Переименовать картинку в БД
-                if (!string.IsNullOrWhiteSpace(PicNameText.Text))
-                {
-                    (PicIDBox.SelectedItem as Data.Pic).PicName = PicNameText.Text;
-                    Global.DB.SaveChanges();
-                }
-            }
-            else
-            {// Найти и отобразить картинку
-                OpenFileDialog openFileDialog = new OpenFileDialog
-                {
-                    Filter = Properties.Resources.FileFilterIMG,
-                    Multiselect = false
-                };
-                bool? ofdShow = openFileDialog.ShowDialog();
-                if (ofdShow.HasValue && ofdShow.Value)
-                {
-                    BitmapImage bitmapImage = new BitmapImage();
-                    bitmapImage.BeginInit();
-                    bitmapImage.UriSource = new Uri(openFileDialog.FileName);
-                    bitmapImage.EndInit();
-                    ImageBox.Source = bitmapImage;
-                    PicNameText.Text = openFileDialog.FileName
-                        .Remove(0, openFileDialog.FileName.LastIndexOf('\\') + 1);
-                }
-            }
-        }
-
-        private void PicButton1_Click(object sender, RoutedEventArgs e)
-        {
-            if (IsInEditMode)
-            { // Удалить
-                if (Voice.Say(AppResources.Lang.DeleteImagePrompt, MessageBoxButton.YesNo) ==
-                    MessageBoxResult.Yes)
-                {
-                    Global.DB.Pics.Remove(PicIDBox.SelectedItem as Data.Pic);
-                    Global.DB.SaveChanges();
-                    UpdatePicItems();
-                }
-            }
-            else
-            { // Добавить
-                Voice.Say(AddGetPic(PicNameText.Text) is null ?
-                    AppResources.Lang.NameNotEntered : AppResources.Lang.AddedSuccessfully);
-            }
-        }
-
-        private Data.Pic AddGetPic(string name)
-        { // Добавить картинку в БД
-            if (name.Length == 0) return null;
-            ImageSourceConverter imageSourceConverter = new ImageSourceConverter();
-            byte[] imageBin = 
-                (byte[])imageSourceConverter.ConvertTo(ImageBox.Source, typeof(byte[]));
-            Data.Pic pic = new Data.Pic
+            if (!string.IsNullOrWhiteSpace(PicNameText.Text))
             {
-                PicName = PicNameText.Text,
-                Bin = imageBin
-            };
-            pic = Global.DB.Pics.Add(pic);
-            Global.DB.SaveChanges();
-            UpdatePicItems();
-            return pic;
+                (PicIDBox.SelectedItem as Data.Pic).PicName = PicNameText.Text;
+                Global.DB.SaveChanges();
+            }
         }
+
+        private void OpenImageFromDialog()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = Properties.Resources.FileFilterIMG,
+                Multiselect = false
+            };
+            bool? ofdShow = openFileDialog.ShowDialog();
+            if (ofdShow.HasValue && ofdShow.Value)
+            {
+                BitmapImage bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.UriSource = new Uri(openFileDialog.FileName);
+                bitmapImage.EndInit();
+                ImageBox.Source = bitmapImage;
+                PicNameText.Text = openFileDialog.FileName
+                    .Remove(0, openFileDialog.FileName.LastIndexOf('\\') + 1);
+            }
+        }
+
+        private void DeleteImage()
+        {
+            if (Voice.Say(AppResources.Lang.DeleteImagePrompt, MessageBoxButton.YesNo) ==
+                MessageBoxResult.Yes)
+            {
+                Global.DB.Pics.Remove(PicIDBox.SelectedItem as Data.Pic);
+                Global.DB.SaveChanges();
+                UpdatePicItems();
+            }
+        }
+
+        private void AddImage()
+        {
+            Voice.Say(AddGetPic(PicNameText.Text) is null ?
+                AppResources.Lang.NameNotEntered : AppResources.Lang.AddedSuccessfully);
+        }
+        #endregion
         #endregion
 
         #region Subs
@@ -370,7 +394,19 @@ namespace CyberClub.Pages
 
         #region Submit
         private void GameButton0_Click(object sender, RoutedEventArgs e)
-        { // Применить изменения
+        {
+            SubmitGameEdits();
+        }
+
+        private void GameButton1_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsInEditMode) DeleteGame();
+            else AddGame();
+        }
+
+        #region Submission details
+        private void SubmitGameEdits()
+        {
             if (!(GameIDBox.SelectedItem is Data.Game game)) return;
             if (Voice.Say(AppResources.Lang.UpdateGamePrompt, MessageBoxButton.YesNo) ==
                 MessageBoxResult.No) return;
@@ -387,39 +423,38 @@ namespace CyberClub.Pages
             Global.DB.SaveChanges();
         }
 
-        private void GameButton1_Click(object sender, RoutedEventArgs e)
+        private void DeleteGame()
         {
-            if (IsInEditMode)
-            { // Удалить игру
-                if ((GameIDBox.SelectedItem is Data.Game) &
-                    Voice.Say(AppResources.Lang.DeleteGamePrompt, MessageBoxButton.YesNo) ==
-                    MessageBoxResult.Yes)
-                {
-                    Global.DB.Games.Remove(GameIDBox.SelectedItem as Data.Game);
-                    Global.DB.SaveChanges();
-                    UpdateGameItems();
-                }
-            }
-            else
-            { // Добавить в базу новую игру
-                if (GameNameText.Text.Length == 0) return;
-                Data.Game game = new Data.Game
-                {
-                    GameName = GameNameText.Text,
-                    Dev = AddGetDev(DevText.Text),
-                    GameLink = PathText.Text,
-                    Pic = AddGetPic(PicNameText.Text),
-                    Singleplayer = SPToggle.IsChecked,
-                    Multiplayer = MPToggle.IsChecked,
-                    Genres = GetTickedGenres()
-                };
-                Global.DB.Games.Add(game);
+            if ((GameIDBox.SelectedItem is Data.Game) &
+                Voice.Say(AppResources.Lang.DeleteGamePrompt, MessageBoxButton.YesNo) ==
+                MessageBoxResult.Yes)
+            {
+                Global.DB.Games.Remove(GameIDBox.SelectedItem as Data.Game);
                 Global.DB.SaveChanges();
                 UpdateGameItems();
-                ClearFields();
-                Voice.Say(AppResources.Lang.GameAddedToDB);
             }
         }
+
+        private void AddGame()
+        {
+            if (GameNameText.Text.Length == 0) return;
+            Data.Game game = new Data.Game
+            {
+                GameName = GameNameText.Text,
+                Dev = AddGetDev(DevText.Text),
+                GameLink = PathText.Text,
+                Pic = AddGetPic(PicNameText.Text),
+                Singleplayer = SPToggle.IsChecked,
+                Multiplayer = MPToggle.IsChecked,
+                Genres = GetTickedGenres()
+            };
+            Global.DB.Games.Add(game);
+            Global.DB.SaveChanges();
+            UpdateGameItems();
+            ClearFields();
+            Voice.Say(AppResources.Lang.GameAddedToDB);
+        }
+        #endregion
         #endregion
     }
 }
