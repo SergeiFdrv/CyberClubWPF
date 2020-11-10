@@ -23,6 +23,6 @@ namespace CyberClub.Pages
         /// </summary>
         protected abstract void SetEditMode(bool value);
 
-        public abstract void OpenFromTable(int id);
+        public abstract void OpenFromTable(object obj);
     }
 }

@@ -26,10 +26,11 @@ namespace CyberClub
         }
         protected static App Global => Application.Current as App;
 
+        #region Games
         private GamesPage GamesPage { get; } = new GamesPage();
 
-        private List<DataGridTextColumn> GamesDGColumns { get; } =
-            new List<DataGridTextColumn>
+        private List<DataGridColumn> GamesDGColumns { get; } =
+            new List<DataGridColumn>
         {
                 new DataGridTextColumn
                 {
@@ -40,13 +41,25 @@ namespace CyberClub
                 {
                     Header = "Name",
                     Binding = new Binding("GameName")
+                },
+                new DataGridTextColumn
+                {
+                    Header = "Developed by",
+                    Binding = new Binding("Dev.DevName")
+                },
+                new DataGridTextColumn
+                {
+                    Header = "Subs",
+                    Binding = new Binding("Subscriptions.Count")
                 }
         };
+        #endregion
 
+        #region Accounts
         //private AccountsPage AccountsPage { get; } = new AccountsPage();
 
-        private List<DataGridTextColumn> AccountsDGColumns { get; } =
-            new List<DataGridTextColumn>
+        private List<DataGridColumn> AccountsDGColumns { get; } =
+            new List<DataGridColumn>
         {
                 new DataGridTextColumn
                 {
@@ -57,23 +70,35 @@ namespace CyberClub
                 {
                     Header = "Name",
                     Binding = new Binding("UserName")
+                },
+                new DataGridTextColumn
+                {
+                    Header = "Level",
+                    Binding = new Binding("Hierarchy.AuthName")
                 }
         };
+        #endregion
 
+        #region Messages
         //private MessagesPage MessagesPage { get; } = new MessagesPage();
 
-        private List<DataGridTextColumn> MessagesDGColumns { get; } =
-            new List<DataGridTextColumn>
+        private List<DataGridColumn> MessagesDGColumns { get; } =
+            new List<DataGridColumn>
         {
                 new DataGridTextColumn
                 {
                     Header = "ID",
                     Binding = new Binding("MessageID")
                 },
+                new DataGridCheckBoxColumn
+                {
+                    Header = "Rd",
+                    Binding = new Binding("IsRead")
+                },
                 new DataGridTextColumn
                 {
                     Header = "From",
-                    Binding = new Binding("UserName")
+                    Binding = new Binding("User.UserName")
                 },
                 new DataGridTextColumn
                 {
@@ -81,6 +106,7 @@ namespace CyberClub
                     Binding = new Binding("Briefly")
                 }
         };
+        #endregion
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -97,7 +123,7 @@ namespace CyberClub
 
         }
 
-        private void SetDGColumns(IEnumerable<DataGridTextColumn> columns)
+        private void SetDGColumns(IEnumerable<DataGridColumn> columns)
         {
             DataGridTable.Columns.Clear();
             foreach (var i in columns)
@@ -108,6 +134,7 @@ namespace CyberClub
 
         private void GamesButton_Checked(object sender, RoutedEventArgs e)
         {
+            TableTabButton.IsChecked = true;
             AccountsButton.IsChecked = MessagesButton.IsChecked = GamesButton.IsEnabled =
                 !(AccountsButton.IsEnabled = MessagesButton.IsEnabled = true);
             DataGridTable.ItemsSource = Global.DB.Games.ToList();
@@ -117,6 +144,7 @@ namespace CyberClub
 
         private void AccountsButton_Checked(object sender, RoutedEventArgs e)
         {
+            TableTabButton.IsChecked = true;
             GamesButton.IsChecked = MessagesButton.IsChecked = AccountsButton.IsEnabled =
                 !(GamesButton.IsEnabled = MessagesButton.IsEnabled = true);
             DataGridTable.ItemsSource = Global.DB.Users.ToList();
@@ -126,6 +154,7 @@ namespace CyberClub
 
         private void MessagesButton_Checked(object sender, RoutedEventArgs e)
         {
+            TableTabButton.IsChecked = true;
             GamesButton.IsChecked = AccountsButton.IsChecked = MessagesButton.IsEnabled =
                 !(GamesButton.IsEnabled = AccountsButton.IsEnabled = true);
             DataGridTable.ItemsSource = Global.DB.Feedbacks.ToList();
@@ -162,6 +191,12 @@ namespace CyberClub
             (PageFrame.Content as AdminEditorPage).IsInEditMode = true;
             PageFrame.Visibility = Visibility.Visible;
             DataGridTable.Visibility = Visibility.Collapsed;
+        }
+
+        private void DataGridTable_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            EditTabButton.IsChecked = true;
+            (PageFrame.Content as AdminEditorPage).OpenFromTable(DataGridTable.SelectedItem);
         }
     }
 }

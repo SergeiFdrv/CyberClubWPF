@@ -67,9 +67,9 @@ namespace CyberClub.Pages
             ClearFields();
         }
 
-        public override void OpenFromTable(int id)
+        public override void OpenFromTable(object obj)
         {
-            GameIDBox.SelectedItem = Global.DB.Games.First(g => g.GameID == id);
+            GameIDBox.SelectedItem = obj as Data.Game;
         }
         #endregion
 
@@ -196,7 +196,8 @@ namespace CyberClub.Pages
         #region Genre
         private void GenreButton_Click(object sender, RoutedEventArgs e)
         {
-            if (GenreText.Text.Length == 0) return;
+            if (string.IsNullOrWhiteSpace(GenreText.Text) ||
+                Global.DB.Genres.Any(g => g.GenreName == GenreText.Text)) return;
             if (IsInEditMode && !string.IsNullOrWhiteSpace(GenreText.Text) &&
                 GenrePicker.SelectedItem != null &&
                 Voice.Say(AppResources.Lang.RenameGenrePrompt, MessageBoxButton.YesNo) ==
@@ -233,7 +234,7 @@ namespace CyberClub.Pages
         private void GenrePicker_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             GenreText.Text =
-                ((GenrePicker.SelectedItem as InteractiveListItem)?.Item as Data.Genre)
+                ((GenrePicker.SelectedItem as InteractiveListItem)?.Item as Data.Genre)?
                 .GenreName;
         }
 
