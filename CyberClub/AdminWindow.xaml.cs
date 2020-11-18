@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -26,6 +27,7 @@ namespace CyberClub
         }
         protected static App Global => Application.Current as App;
 
+        #region Grid
         #region Games
         private GamesPage GamesPage { get; } = new GamesPage();
 
@@ -107,10 +109,11 @@ namespace CyberClub
                 }
         };
         #endregion
+        #endregion
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            GamesButton.IsChecked = TableTabButton.IsChecked = true;
+            GamesButton.IsChecked = true;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -135,8 +138,7 @@ namespace CyberClub
         private void GamesButton_Checked(object sender, RoutedEventArgs e)
         {
             TableTabButton.IsChecked = true;
-            AccountsButton.IsChecked = MessagesButton.IsChecked = GamesButton.IsEnabled =
-                !(AccountsButton.IsEnabled = MessagesButton.IsEnabled = true);
+            ChangeTab(GamesButton, AccountsButton, MessagesButton);
             DataGridTable.ItemsSource = Global.DB.Games.ToList();
             SetDGColumns(GamesDGColumns);
             PageFrame.Navigate(GamesPage);
@@ -145,8 +147,7 @@ namespace CyberClub
         private void AccountsButton_Checked(object sender, RoutedEventArgs e)
         {
             TableTabButton.IsChecked = true;
-            GamesButton.IsChecked = MessagesButton.IsChecked = AccountsButton.IsEnabled =
-                !(GamesButton.IsEnabled = MessagesButton.IsEnabled = true);
+            ChangeTab(AccountsButton, GamesButton, MessagesButton);
             DataGridTable.ItemsSource = Global.DB.Users.ToList();
             SetDGColumns(AccountsDGColumns);
             //PageFrame.Navigate(AccountsPage);
@@ -155,8 +156,7 @@ namespace CyberClub
         private void MessagesButton_Checked(object sender, RoutedEventArgs e)
         {
             TableTabButton.IsChecked = true;
-            GamesButton.IsChecked = AccountsButton.IsChecked = MessagesButton.IsEnabled =
-                !(GamesButton.IsEnabled = AccountsButton.IsEnabled = true);
+            ChangeTab(MessagesButton, GamesButton, AccountsButton);
             DataGridTable.ItemsSource = Global.DB.Feedbacks.ToList();
             SetDGColumns(MessagesDGColumns);
             //PageFrame.Navigate(MessagesPage);
@@ -169,16 +169,14 @@ namespace CyberClub
 
         private void TableTabButton_Checked(object sender, RoutedEventArgs e)
         {
-            AddTabButton.IsChecked = EditTabButton.IsChecked = TableTabButton.IsEnabled =
-                !(AddTabButton.IsEnabled = EditTabButton.IsEnabled = true);
+            ChangeTab(TableTabButton, AddTabButton, EditTabButton);
             DataGridTable.Visibility = Visibility.Visible;
             PageFrame.Visibility = Visibility.Collapsed;
         }
 
         private void AddTabButton_Checked(object sender, RoutedEventArgs e)
         {
-            TableTabButton.IsChecked = EditTabButton.IsChecked = AddTabButton.IsEnabled =
-                !(TableTabButton.IsEnabled = EditTabButton.IsEnabled = true);
+            ChangeTab(AddTabButton, TableTabButton, EditTabButton);
             (PageFrame.Content as AdminEditorPage).IsInEditMode = false;
             PageFrame.Visibility = Visibility.Visible;
             DataGridTable.Visibility = Visibility.Collapsed;
@@ -186,11 +184,16 @@ namespace CyberClub
 
         private void EditTabButton_Checked(object sender, RoutedEventArgs e)
         {
-            TableTabButton.IsChecked = AddTabButton.IsChecked = EditTabButton.IsEnabled =
-                !(TableTabButton.IsEnabled = AddTabButton.IsEnabled = true);
+            ChangeTab(EditTabButton, TableTabButton, AddTabButton);
             (PageFrame.Content as AdminEditorPage).IsInEditMode = true;
             PageFrame.Visibility = Visibility.Visible;
             DataGridTable.Visibility = Visibility.Collapsed;
+        }
+
+        private static void ChangeTab(ToggleButton On, ToggleButton Off0, ToggleButton Off1)
+        {
+            Off0.IsChecked = Off1.IsChecked = On.IsEnabled =
+                !(Off0.IsEnabled = Off1.IsEnabled = true);
         }
 
         private void DataGridTable_MouseDoubleClick(object sender, MouseButtonEventArgs e)

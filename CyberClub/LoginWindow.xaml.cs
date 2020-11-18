@@ -27,12 +27,6 @@ namespace CyberClub
             InitializeComponent();
         }
 
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-            Global.Shutdown();
-        }
-
         private static App Global => Application.Current as App;
 
         private List<User> Users { get; } = Global.DB.Users.ToList();
