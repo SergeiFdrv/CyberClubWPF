@@ -71,11 +71,8 @@ namespace CyberClub.Pages
         {
             GameIDBox.SelectedItem = obj as Data.Game;
         }
-        #endregion
 
-        #region Common
-        // TODO: DRY. Наплодить методов
-        private void ClearFields()
+        protected override void ClearFields()
         {
             GameNameText.Text = PathText.Text = string.Empty;
             DevIDBox.SelectedItem = PicIDBox.SelectedItem = null;
@@ -438,7 +435,7 @@ namespace CyberClub.Pages
 
         private void AddGame()
         {
-            if (GameNameText.Text.Length == 0) return;
+            if (string.IsNullOrWhiteSpace(GameNameText.Text)) return;
             Data.Game game = new Data.Game
             {
                 GameName = GameNameText.Text,

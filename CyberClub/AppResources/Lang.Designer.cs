@@ -61,6 +61,15 @@ namespace CyberClub.AppResources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на About.
+        /// </summary>
+        public static string About {
+            get {
+                return ResourceManager.GetString("About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Process failed. Possibly, some required parameters are not set or the chosen name is already used..
         /// </summary>
         public static string AccountFailMissingParamsOrNameAlreadyUsed {
@@ -205,6 +214,15 @@ namespace CyberClub.AppResources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Email.
+        /// </summary>
+        public static string EMail {
+            get {
+                return ResourceManager.GetString("EMail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на An error occured..
         /// </summary>
         public static string Error {
@@ -264,6 +282,15 @@ namespace CyberClub.AppResources {
         public static string Genre {
             get {
                 return ResourceManager.GetString("Genre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Level.
+        /// </summary>
+        public static string Level {
+            get {
+                return ResourceManager.GetString("Level", resourceCulture);
             }
         }
         
@@ -345,6 +372,15 @@ namespace CyberClub.AppResources {
         public static string Open {
             get {
                 return ResourceManager.GetString("Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Password.
+        /// </summary>
+        public static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
             }
         }
         
@@ -507,6 +543,15 @@ namespace CyberClub.AppResources {
         public static string UpdateGamePrompt {
             get {
                 return ResourceManager.GetString("UpdateGamePrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на User.
+        /// </summary>
+        public static string User {
+            get {
+                return ResourceManager.GetString("User", resourceCulture);
             }
         }
         

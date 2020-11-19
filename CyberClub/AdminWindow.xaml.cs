@@ -58,7 +58,7 @@ namespace CyberClub
         #endregion
 
         #region Accounts
-        //private AccountsPage AccountsPage { get; } = new AccountsPage();
+        private AccountsPage AccountsPage { get; } = new AccountsPage();
 
         private List<DataGridColumn> AccountsDGColumns { get; } =
             new List<DataGridColumn>
@@ -75,8 +75,23 @@ namespace CyberClub
                 },
                 new DataGridTextColumn
                 {
+                    Header = "Email",
+                    Binding = new Binding("Email")
+                },
+                new DataGridTextColumn
+                {
                     Header = "Level",
                     Binding = new Binding("Hierarchy.AuthName")
+                },
+                new DataGridTextColumn
+                {
+                    Header = "Subs",
+                    Binding = new Binding("Subscriptions.Count")
+                },
+                new DataGridTextColumn
+                {
+                    Header = "About",
+                    Binding = new Binding("Info")
                 }
         };
         #endregion
@@ -150,7 +165,7 @@ namespace CyberClub
             ChangeTab(AccountsButton, GamesButton, MessagesButton);
             DataGridTable.ItemsSource = Global.DB.Users.ToList();
             SetDGColumns(AccountsDGColumns);
-            //PageFrame.Navigate(AccountsPage);
+            PageFrame.Navigate(AccountsPage);
         }
 
         private void MessagesButton_Checked(object sender, RoutedEventArgs e)

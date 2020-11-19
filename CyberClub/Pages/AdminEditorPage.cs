@@ -24,5 +24,7 @@ namespace CyberClub.Pages
         protected abstract void SetEditMode(bool value);
 
         public abstract void OpenFromTable(object obj);
+
+        protected abstract void ClearFields();
     }
 }
