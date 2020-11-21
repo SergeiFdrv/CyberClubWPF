@@ -180,6 +180,9 @@
   <data name="FillInNecessaryTextBox" xml:space="preserve">
     <value>Заполните обязательное поле.</value>
   </data>
+  <data name="From" xml:space="preserve">
+    <value>От</value>
+  </data>
   <data name="Game" xml:space="preserve">
     <value>Игра</value>
   </data>
@@ -191,6 +194,9 @@
   </data>
   <data name="Genre" xml:space="preserve">
     <value>Жанр</value>
+  </data>
+  <data name="IsNew" xml:space="preserve">
+    <value>Новое</value>
   </data>
   <data name="Level" xml:space="preserve">
     <value>Уровень</value>
@@ -263,6 +269,12 @@
   </data>
   <data name="Table" xml:space="preserve">
     <value>Таблица</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Время</value>
+  </data>
+  <data name="Topic" xml:space="preserve">
+    <value>Тема</value>
   </data>
   <data name="Unsubscribe" xml:space="preserve">
     <value>Отписаться</value>

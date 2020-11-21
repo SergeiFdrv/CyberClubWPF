@@ -180,6 +180,9 @@
   <data name="FillInNecessaryTextBox" xml:space="preserve">
     <value>Fill in all the reqiured textfields.</value>
   </data>
+  <data name="From" xml:space="preserve">
+    <value>From</value>
+  </data>
   <data name="Game" xml:space="preserve">
     <value>Game</value>
   </data>
@@ -191,6 +194,9 @@
   </data>
   <data name="Genre" xml:space="preserve">
     <value>Genre</value>
+  </data>
+  <data name="IsNew" xml:space="preserve">
+    <value>Is new</value>
   </data>
   <data name="Level" xml:space="preserve">
     <value>Level</value>
@@ -263,6 +269,12 @@
   </data>
   <data name="Table" xml:space="preserve">
     <value>Table</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="Topic" xml:space="preserve">
+    <value>Topic</value>
   </data>
   <data name="Unsubscribe" xml:space="preserve">
     <value>Unsubscribe</value>

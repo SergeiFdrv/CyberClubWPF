@@ -250,6 +250,15 @@ namespace CyberClub.AppResources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на From.
+        /// </summary>
+        public static string From {
+            get {
+                return ResourceManager.GetString("From", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Game.
         /// </summary>
         public static string Game {
@@ -282,6 +291,15 @@ namespace CyberClub.AppResources {
         public static string Genre {
             get {
                 return ResourceManager.GetString("Genre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Is new.
+        /// </summary>
+        public static string IsNew {
+            get {
+                return ResourceManager.GetString("IsNew", resourceCulture);
             }
         }
         
@@ -498,6 +516,24 @@ namespace CyberClub.AppResources {
         public static string Table {
             get {
                 return ResourceManager.GetString("Table", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Time.
+        /// </summary>
+        public static string Time {
+            get {
+                return ResourceManager.GetString("Time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Topic.
+        /// </summary>
+        public static string Topic {
+            get {
+                return ResourceManager.GetString("Topic", resourceCulture);
             }
         }
         

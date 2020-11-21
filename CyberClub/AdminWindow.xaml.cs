@@ -97,7 +97,7 @@ namespace CyberClub
         #endregion
 
         #region Messages
-        //private MessagesPage MessagesPage { get; } = new MessagesPage();
+        private MessagePage MessagesPage { get; } = new MessagePage();
 
         private List<DataGridColumn> MessagesDGColumns { get; } =
             new List<DataGridColumn>
@@ -174,7 +174,7 @@ namespace CyberClub
             ChangeTab(MessagesButton, GamesButton, AccountsButton);
             DataGridTable.ItemsSource = Global.DB.Feedbacks.ToList();
             SetDGColumns(MessagesDGColumns);
-            //PageFrame.Navigate(MessagesPage);
+            PageFrame.Navigate(MessagesPage);
         }
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e)
