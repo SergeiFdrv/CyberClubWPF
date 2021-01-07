@@ -20,7 +20,19 @@ namespace CyberClub
         }
 
         public int UserID { get; set; }
-        public DBContext DB { get; } = new DBContext();
+
+        public User User { get; set; }
+
+        private DBContext _DB;
+        public DBContext DB
+        {
+            get => _DB;
+            set
+            {
+                if (_DB is DBContext) return;
+                _DB = value;
+            }
+        }
 
         private void Application_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
@@ -28,7 +40,7 @@ namespace CyberClub
 
         private void App_Exit(object sender, ExitEventArgs e)
         {
-            DB.Dispose();
+            _DB?.Dispose();
         }
 
         private void ComboBox_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
