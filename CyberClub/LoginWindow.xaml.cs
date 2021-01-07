@@ -25,30 +25,59 @@ namespace CyberClub
         public LoginWindow()
         {
             InitializeComponent();
+            InitDB();
         }
 
         private static App Global => Application.Current as App;
 
-        private List<User> Users { get; } = Global.DB.Users.ToList();
+        private void InitDB()
+        {
+            Voice loadingMsg = new Voice();
+            loadingMsg.ErrorText.Text = "Establishing database connection. Please wait...";
+            loadingMsg.OK.Visibility = loadingMsg.Cancel.Visibility =
+            loadingMsg.Yes.Visibility = loadingMsg.No.Visibility =
+                Visibility.Collapsed;
+            loadingMsg.Show();
+            try
+            {
+                Global.DB = new DBContext();
+            }
+            catch
+            {
+                loadingMsg.Close();
+                loadingMsg = new Voice();
+                loadingMsg.ErrorText.Text =
+                    "Database connection failed.\n" +
+                    "Closing the app in a few seconds.";
+                loadingMsg.OK.Visibility = loadingMsg.Cancel.Visibility =
+                loadingMsg.Yes.Visibility = loadingMsg.No.Visibility =
+                    Visibility.Collapsed;
+                loadingMsg.Show();
+                System.Threading.Thread.Sleep(5000);
+                loadingMsg.Close();
+                Close();
+            }
+            loadingMsg.Close();
+        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(LoginInput.Text)) return;
-            User selection = Users.FirstOrDefault(user =>
+            Global.User = Global.DB.Users.FirstOrDefault(user =>
                 user.UserName == LoginInput.Text &&
                 user.Passwd == PasswordInput.Password);
-            if (selection is null)
+            if (Global.User is null)
             {
                 Voice.Say(Lang.LoginPasswordNotFound);
                 return;
             }
             LoginInput.Text = PasswordInput.Password = string.Empty;
-            Global.UserID = selection.UserID;
             string authname = Global.DB.Hierarchy.Where(level => 
-                level.AuthID == selection.Authority).First().AuthName;
+                level.AuthID == Global.User.Authority).First().AuthName;
             if (authname == "banned")
             {
                 Voice.Say(Lang.YouAreBanned);
+                Global.User = null;
             }
             else
             {
