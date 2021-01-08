@@ -38,24 +38,31 @@ namespace CyberClub
             loadingMsg.Yes.Visibility = loadingMsg.No.Visibility =
                 Visibility.Collapsed;
             loadingMsg.Show();
-            try
+            Task<DBContext> DBTask = new Task<DBContext>(() =>
             {
-                Global.DB = new DBContext();
-            }
-            catch
+                try
+                {
+                    return Global.DB = new DBContext();
+                }
+                catch
+                {
+                    return null;
+                }
+            });
+            DBTask.Start();
+            if (DBTask.Result is null)
             {
-                loadingMsg.Close();
-                loadingMsg = new Voice();
-                loadingMsg.ErrorText.Text =
-                    "Database connection failed.\n" +
-                    "Closing the app in a few seconds.";
-                loadingMsg.OK.Visibility = loadingMsg.Cancel.Visibility =
-                loadingMsg.Yes.Visibility = loadingMsg.No.Visibility =
-                    Visibility.Collapsed;
-                loadingMsg.Show();
-                System.Threading.Thread.Sleep(5000);
-                loadingMsg.Close();
-                Close();
+                loadingMsg.ErrorText.Text = "Database connection failed.";
+                loadingMsg.Cancel.Visibility = Visibility.Visible;
+                loadingMsg.Cancel.Content = "Close";
+                loadingMsg.Cancel.Click += delegate
+                {
+                    loadingMsg.Close();
+                    Close();
+                };
+                loadingMsg.UpdateLayout();
+                loadingMsg.Hide();
+                loadingMsg.ShowDialog();
             }
             loadingMsg.Close();
         }
