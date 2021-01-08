@@ -70,15 +70,6 @@ namespace CyberClub.AppResources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Process failed. Possibly, some required parameters are not set or the chosen name is already used..
-        /// </summary>
-        public static string AccountFailMissingParamsOrNameAlreadyUsed {
-            get {
-                return ResourceManager.GetString("AccountFailMissingParamsOrNameAlreadyUsed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Accounts.
         /// </summary>
         public static string Accounts {
@@ -106,15 +97,6 @@ namespace CyberClub.AppResources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Addition failed..
-        /// </summary>
-        public static string AddError {
-            get {
-                return ResourceManager.GetString("AddError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Back.
         /// </summary>
         public static string Back {
@@ -133,65 +115,11 @@ namespace CyberClub.AppResources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Database error..
-        /// </summary>
-        public static string DBError {
-            get {
-                return ResourceManager.GetString("DBError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Delete.
         /// </summary>
         public static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Delete account?.
-        /// </summary>
-        public static string DeleteAccountPrompt {
-            get {
-                return ResourceManager.GetString("DeleteAccountPrompt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Delete developer?.
-        /// </summary>
-        public static string DeleteDeveloperPrompt {
-            get {
-                return ResourceManager.GetString("DeleteDeveloperPrompt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Delete game?.
-        /// </summary>
-        public static string DeleteGamePrompt {
-            get {
-                return ResourceManager.GetString("DeleteGamePrompt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Delete genre?.
-        /// </summary>
-        public static string DeleteGenrePrompt {
-            get {
-                return ResourceManager.GetString("DeleteGenrePrompt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Delete image?.
-        /// </summary>
-        public static string DeleteImagePrompt {
-            get {
-                return ResourceManager.GetString("DeleteImagePrompt", resourceCulture);
             }
         }
         
@@ -219,33 +147,6 @@ namespace CyberClub.AppResources {
         public static string EMail {
             get {
                 return ResourceManager.GetString("EMail", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на An error occured..
-        /// </summary>
-        public static string Error {
-            get {
-                return ResourceManager.GetString("Error", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на The program&apos;s executable file could not be found. The lazy ass admin should have set the proper file path..
-        /// </summary>
-        public static string ExeNotFound {
-            get {
-                return ResourceManager.GetString("ExeNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Fill in all the reqiured textfields..
-        /// </summary>
-        public static string FillInNecessaryTextBox {
-            get {
-                return ResourceManager.GetString("FillInNecessaryTextBox", resourceCulture);
             }
         }
         
@@ -313,15 +214,6 @@ namespace CyberClub.AppResources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на The login-password combination could not be found. Contact the admin to register an account..
-        /// </summary>
-        public static string LoginPasswordNotFound {
-            get {
-                return ResourceManager.GetString("LoginPasswordNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Log out.
         /// </summary>
         public static string LogOut {
@@ -354,24 +246,6 @@ namespace CyberClub.AppResources {
         public static string MyGames {
             get {
                 return ResourceManager.GetString("MyGames", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на The name is already used..
-        /// </summary>
-        public static string NameAlreadyUsed {
-            get {
-                return ResourceManager.GetString("NameAlreadyUsed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на The name is not entered..
-        /// </summary>
-        public static string NameNotEntered {
-            get {
-                return ResourceManager.GetString("NameNotEntered", resourceCulture);
             }
         }
         
@@ -421,47 +295,11 @@ namespace CyberClub.AppResources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Rename developer?.
-        /// </summary>
-        public static string RenameDeveloperPrompt {
-            get {
-                return ResourceManager.GetString("RenameDeveloperPrompt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Rename genre?.
-        /// </summary>
-        public static string RenameGenrePrompt {
-            get {
-                return ResourceManager.GetString("RenameGenrePrompt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Search games.
         /// </summary>
         public static string SearchGames {
             get {
                 return ResourceManager.GetString("SearchGames", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Select the genre to rename and input the new name..
-        /// </summary>
-        public static string SelectAGenreNTypeTheName {
-            get {
-                return ResourceManager.GetString("SelectAGenreNTypeTheName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Select the genre to delete..
-        /// </summary>
-        public static string SelectAGenreToDelete {
-            get {
-                return ResourceManager.GetString("SelectAGenreToDelete", resourceCulture);
             }
         }
         
@@ -547,38 +385,11 @@ namespace CyberClub.AppResources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Cancel subscription?.
-        /// </summary>
-        public static string UnsubscribePrompt {
-            get {
-                return ResourceManager.GetString("UnsubscribePrompt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Update account?.
-        /// </summary>
-        public static string UpdateAccountPrompt {
-            get {
-                return ResourceManager.GetString("UpdateAccountPrompt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Updated successfully..
         /// </summary>
         public static string UpdatedSuccessfully {
             get {
                 return ResourceManager.GetString("UpdatedSuccessfully", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Update game info?.
-        /// </summary>
-        public static string UpdateGamePrompt {
-            get {
-                return ResourceManager.GetString("UpdateGamePrompt", resourceCulture);
             }
         }
         
@@ -597,15 +408,6 @@ namespace CyberClub.AppResources {
         public static string Yes {
             get {
                 return ResourceManager.GetString("Yes", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Seems like your account has been suspended. The admin has more info..
-        /// </summary>
-        public static string YouAreBanned {
-            get {
-                return ResourceManager.GetString("YouAreBanned", resourceCulture);
             }
         }
     }

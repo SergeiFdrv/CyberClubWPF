@@ -137,7 +137,7 @@ namespace CyberClub.Pages
 
         private void DevDelButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Voice.Say(AppResources.Lang.DeleteDeveloperPrompt, MessageBoxButton.YesNo) ==
+            if (Voice.Say(AppResources.Question.DeleteDeveloper, MessageBoxButton.YesNo) ==
                 MessageBoxResult.Yes)
             {
                 Global.DB.Devs.Remove(DevIDBox.SelectedItem as Data.Dev);
@@ -170,7 +170,7 @@ namespace CyberClub.Pages
         private void RenameDeveloper()
         {
             if (!string.IsNullOrWhiteSpace(DevText.Text) &&
-            Voice.Say(AppResources.Lang.RenameDeveloperPrompt, MessageBoxButton.YesNo) ==
+            Voice.Say(AppResources.Question.RenameDeveloper, MessageBoxButton.YesNo) ==
             MessageBoxResult.Yes)
             {
                 (DevIDBox.SelectedItem as Data.Dev).DevName = DevText.Text;
@@ -180,7 +180,7 @@ namespace CyberClub.Pages
 
         private void AddDeveloper()
         {
-            if (AddGetDev(DevText.Text) is null) Voice.Say(AppResources.Lang.AddError);
+            if (AddGetDev(DevText.Text) is null) Voice.Say(AppResources.Error.AddError);
             DevText.Text = string.Empty;
         }
         private void UpdateDevItems()
@@ -197,7 +197,7 @@ namespace CyberClub.Pages
                 Global.DB.Genres.Any(g => g.GenreName == GenreText.Text)) return;
             if (IsInEditMode && !string.IsNullOrWhiteSpace(GenreText.Text) &&
                 GenrePicker.SelectedItem != null &&
-                Voice.Say(AppResources.Lang.RenameGenrePrompt, MessageBoxButton.YesNo) ==
+                Voice.Say(AppResources.Question.RenameGenre, MessageBoxButton.YesNo) ==
                 MessageBoxResult.Yes)
             { // Rename genre
                 ((GenrePicker.SelectedItem as InteractiveListItem)?.Item as Data.Genre)
@@ -218,7 +218,7 @@ namespace CyberClub.Pages
 
         private void GenreDelButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Voice.Say(AppResources.Lang.DeleteGenrePrompt, MessageBoxButton.YesNo) ==
+            if (Voice.Say(AppResources.Question.DeleteGenre, MessageBoxButton.YesNo) ==
                 MessageBoxResult.Yes)
             {
                 Global.DB.Genres.Remove((GenrePicker.SelectedItem as InteractiveListItem)?
@@ -248,9 +248,9 @@ namespace CyberClub.Pages
                 }
         }
 
-        private ICollection<Data.Genre> GetTickedGenres()
+        private List<Data.Genre> GetTickedGenres()
         {
-            ICollection<Data.Genre> genres = new List<Data.Genre>();
+            List<Data.Genre> genres = new List<Data.Genre>();
             foreach (InteractiveListItem genre in GenrePicker.Items)
             {
                 if (genre.IsTicked)
@@ -354,7 +354,7 @@ namespace CyberClub.Pages
 
         private void DeleteImage()
         {
-            if (Voice.Say(AppResources.Lang.DeleteImagePrompt, MessageBoxButton.YesNo) ==
+            if (Voice.Say(AppResources.Question.DeleteImage, MessageBoxButton.YesNo) ==
                 MessageBoxResult.Yes)
             {
                 Global.DB.Pics.Remove(PicIDBox.SelectedItem as Data.Pic);
@@ -366,7 +366,7 @@ namespace CyberClub.Pages
         private void AddImage()
         {
             Voice.Say(AddGetPic(PicNameText.Text) is null ?
-                AppResources.Lang.NameNotEntered : AppResources.Lang.AddedSuccessfully);
+                AppResources.Error.NameNotEntered : AppResources.Lang.AddedSuccessfully);
         }
         #endregion
         #endregion
@@ -377,9 +377,9 @@ namespace CyberClub.Pages
             int numberOfSubs = (game is null ? 0 : game.Subscriptions.Count);
             int numberOfRrates = 0;
             double avgRate = 0;
-            var rates = game?.Subscriptions.Where(s => s.Rate != null);
-            if (game?.Subscriptions.Count > 0)
+            if (game != null && game.Subscriptions.Count > 0)
             {
+                var rates = game.Subscriptions.Where(s => s.Rate != null);
                 numberOfSubs = rates.Count();
                 if (numberOfRrates > 0) avgRate = rates.Average(s => (double)s.Rate);
             }
@@ -406,7 +406,7 @@ namespace CyberClub.Pages
         private void SubmitGameEdits()
         {
             if (!(GameIDBox.SelectedItem is Data.Game game)) return;
-            if (Voice.Say(AppResources.Lang.UpdateGamePrompt, MessageBoxButton.YesNo) ==
+            if (Voice.Say(AppResources.Question.UpdateGame, MessageBoxButton.YesNo) ==
                 MessageBoxResult.No) return;
             if (!string.IsNullOrWhiteSpace(GameNameText.Text))
             {
@@ -424,7 +424,7 @@ namespace CyberClub.Pages
         private void DeleteGame()
         {
             if ((GameIDBox.SelectedItem is Data.Game) &
-                Voice.Say(AppResources.Lang.DeleteGamePrompt, MessageBoxButton.YesNo) ==
+                Voice.Say(AppResources.Question.DeleteGame, MessageBoxButton.YesNo) ==
                 MessageBoxResult.Yes)
             {
                 Global.DB.Games.Remove(GameIDBox.SelectedItem as Data.Game);

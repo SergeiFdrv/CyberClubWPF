@@ -117,121 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="About" xml:space="preserve">
-    <value>About</value>
+  <data name="AddError" xml:space="preserve">
+    <value>Addition failed.</value>
   </data>
-  <data name="Accounts" xml:space="preserve">
-    <value>Accounts</value>
+  <data name="DBError" xml:space="preserve">
+    <value>Database error.</value>
   </data>
-  <data name="Add" xml:space="preserve">
-    <value>Add</value>
+  <data name="Default" xml:space="preserve">
+    <value>An error occured.</value>
   </data>
-  <data name="AddedSuccessfully" xml:space="preserve">
-    <value>Added successfully.</value>
+  <data name="ExeNotFound" xml:space="preserve">
+    <value>The program's executable file could not be found. The lazy ass admin should have set the proper file path.</value>
   </data>
-  <data name="Back" xml:space="preserve">
-    <value>Back</value>
+  <data name="FillInNecessaryTextBox" xml:space="preserve">
+    <value>Fill in all the reqiured textfields.</value>
   </data>
-  <data name="Browse" xml:space="preserve">
-    <value>Browse</value>
+  <data name="LoginPasswordNotFound" xml:space="preserve">
+    <value>The login-password combination could not be found. Contact the admin to register an account.</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+  <data name="MissingParamsOrNameAlreadyUsed" xml:space="preserve">
+    <value>Process failed. Possibly, some required parameters are not set or the chosen name is already used.</value>
   </data>
-  <data name="DevelopedBy" xml:space="preserve">
-    <value>Developed by</value>
+  <data name="NameAlreadyUsed" xml:space="preserve">
+    <value>The name is already used.</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Edit</value>
+  <data name="NameNotEntered" xml:space="preserve">
+    <value>The name is not entered.</value>
   </data>
-  <data name="EMail" xml:space="preserve">
-    <value>Email</value>
+  <data name="SelectAGenreNTypeTheName" xml:space="preserve">
+    <value>Select the genre to rename and input the new name.</value>
   </data>
-  <data name="From" xml:space="preserve">
-    <value>From</value>
+  <data name="SelectAGenreToDelete" xml:space="preserve">
+    <value>Select the genre to delete.</value>
   </data>
-  <data name="Game" xml:space="preserve">
-    <value>Game</value>
-  </data>
-  <data name="GameAddedToDB" xml:space="preserve">
-    <value>Game added successfully.</value>
-  </data>
-  <data name="Games" xml:space="preserve">
-    <value>Games</value>
-  </data>
-  <data name="Genre" xml:space="preserve">
-    <value>Genre</value>
-  </data>
-  <data name="IsNew" xml:space="preserve">
-    <value>Is new</value>
-  </data>
-  <data name="Level" xml:space="preserve">
-    <value>Level</value>
-  </data>
-  <data name="LogOut" xml:space="preserve">
-    <value>Log out</value>
-  </data>
-  <data name="Messages" xml:space="preserve">
-    <value>Messages</value>
-  </data>
-  <data name="Multiplayer" xml:space="preserve">
-    <value>Multiplayer</value>
-  </data>
-  <data name="MyGames" xml:space="preserve">
-    <value>My games</value>
-  </data>
-  <data name="No" xml:space="preserve">
-    <value>No</value>
-  </data>
-  <data name="Open" xml:space="preserve">
-    <value>Open</value>
-  </data>
-  <data name="Password" xml:space="preserve">
-    <value>Password</value>
-  </data>
-  <data name="PathToEXE" xml:space="preserve">
-    <value>Path to .exe</value>
-  </data>
-  <data name="Rename" xml:space="preserve">
-    <value>Rename</value>
-  </data>
-  <data name="SearchGames" xml:space="preserve">
-    <value>Search games</value>
-  </data>
-  <data name="SentSuccessfully" xml:space="preserve">
-    <value>Sent successfully.</value>
-  </data>
-  <data name="SinglePlayer" xml:space="preserve">
-    <value>Single player</value>
-  </data>
-  <data name="Submit" xml:space="preserve">
-    <value>Submit</value>
-  </data>
-  <data name="Subscribe" xml:space="preserve">
-    <value>Subscribe</value>
-  </data>
-  <data name="SubsRatesAndAvg" xml:space="preserve">
-    <value>Subs: {subs}   Rates: {rates}   Avg: {avg}</value>
-  </data>
-  <data name="Table" xml:space="preserve">
-    <value>Table</value>
-  </data>
-  <data name="Time" xml:space="preserve">
-    <value>Time</value>
-  </data>
-  <data name="Topic" xml:space="preserve">
-    <value>Topic</value>
-  </data>
-  <data name="Unsubscribe" xml:space="preserve">
-    <value>Unsubscribe</value>
-  </data>
-  <data name="UpdatedSuccessfully" xml:space="preserve">
-    <value>Updated successfully.</value>
-  </data>
-  <data name="User" xml:space="preserve">
-    <value>User</value>
-  </data>
-  <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
+  <data name="YouAreBanned" xml:space="preserve">
+    <value>Seems like your account has been suspended. The admin has more info.</value>
   </data>
 </root>

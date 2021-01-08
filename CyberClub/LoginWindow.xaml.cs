@@ -75,7 +75,7 @@ namespace CyberClub
                 user.Passwd == PasswordInput.Password);
             if (Global.User is null)
             {
-                Voice.Say(Lang.LoginPasswordNotFound);
+                Voice.Say(Error.LoginPasswordNotFound);
                 return;
             }
             LoginInput.Text = PasswordInput.Password = string.Empty;
@@ -83,7 +83,7 @@ namespace CyberClub
                 level.AuthID == Global.User.Authority).First().AuthName;
             if (authname == "banned")
             {
-                Voice.Say(Lang.YouAreBanned);
+                Voice.Say(Error.YouAreBanned);
                 Global.User = null;
             }
             else

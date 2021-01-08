@@ -134,7 +134,7 @@ namespace CyberClub.Pages
         private void UserSubmitButton_Click(object sender, RoutedEventArgs e)
         {
             if (!(UserIDBox.SelectedItem is Data.User user)) return;
-            if (Voice.Say(AppResources.Lang.UpdateAccountPrompt, MessageBoxButton.YesNo) ==
+            if (Voice.Say(AppResources.Question.UpdateAccount, MessageBoxButton.YesNo) ==
                 MessageBoxResult.No) return;
             if (!string.IsNullOrWhiteSpace(UserNameText.Text))
             {
@@ -150,7 +150,7 @@ namespace CyberClub.Pages
         private void UserDeleteButton_Click(object sender, RoutedEventArgs e)
         {
             if ((UserIDBox.SelectedItem is Data.Game) &
-                Voice.Say(AppResources.Lang.DeleteAccountPrompt, MessageBoxButton.YesNo) ==
+                Voice.Say(AppResources.Question.DeleteAccount, MessageBoxButton.YesNo) ==
                 MessageBoxResult.Yes)
             {
                 Global.DB.Users.Remove(UserIDBox.SelectedItem as Data.User);

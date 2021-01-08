@@ -120,9 +120,6 @@
   <data name="About" xml:space="preserve">
     <value>О себе</value>
   </data>
-  <data name="AccountFailMissingParamsOrNameAlreadyUsed" xml:space="preserve">
-    <value>Неудача. Возможно, заданы не все обязательные параметры или выбранное имя уже занято.</value>
-  </data>
   <data name="Accounts" xml:space="preserve">
     <value>Учётные записи</value>
   </data>
@@ -132,35 +129,14 @@
   <data name="AddedSuccessfully" xml:space="preserve">
     <value>Добавлено.</value>
   </data>
-  <data name="AddError" xml:space="preserve">
-    <value>Добавить не удалось.</value>
-  </data>
   <data name="Back" xml:space="preserve">
     <value>Назад</value>
   </data>
   <data name="Browse" xml:space="preserve">
     <value>Обзор</value>
   </data>
-  <data name="DBError" xml:space="preserve">
-    <value>Ошибка базы данных.</value>
-  </data>
   <data name="Delete" xml:space="preserve">
     <value>Удалить</value>
-  </data>
-  <data name="DeleteAccountPrompt" xml:space="preserve">
-    <value>Удалить учетную запись?</value>
-  </data>
-  <data name="DeleteDeveloperPrompt" xml:space="preserve">
-    <value>Удалить разработчика?</value>
-  </data>
-  <data name="DeleteGamePrompt" xml:space="preserve">
-    <value>Удалить игру?</value>
-  </data>
-  <data name="DeleteGenrePrompt" xml:space="preserve">
-    <value>Удалить жанр?</value>
-  </data>
-  <data name="DeleteImagePrompt" xml:space="preserve">
-    <value>Удалить картинку?</value>
   </data>
   <data name="DevelopedBy" xml:space="preserve">
     <value>Разработчики</value>
@@ -170,15 +146,6 @@
   </data>
   <data name="EMail" xml:space="preserve">
     <value>Эл. почта</value>
-  </data>
-  <data name="Error" xml:space="preserve">
-    <value>Ошибка.</value>
-  </data>
-  <data name="ExeNotFound" xml:space="preserve">
-    <value>Исполняемый файл программы не найден. Админ, раздолбай, должен был назначить правильный путь к файлу</value>
-  </data>
-  <data name="FillInNecessaryTextBox" xml:space="preserve">
-    <value>Заполните обязательное поле.</value>
   </data>
   <data name="From" xml:space="preserve">
     <value>От</value>
@@ -201,9 +168,6 @@
   <data name="Level" xml:space="preserve">
     <value>Уровень</value>
   </data>
-  <data name="LoginPasswordNotFound" xml:space="preserve">
-    <value>Сочетание "логин-пароль" не найдено. Для регистрации учетной записи обратитесь к администратору.</value>
-  </data>
   <data name="LogOut" xml:space="preserve">
     <value>Выйти</value>
   </data>
@@ -215,12 +179,6 @@
   </data>
   <data name="MyGames" xml:space="preserve">
     <value>Мои игры</value>
-  </data>
-  <data name="NameAlreadyUsed" xml:space="preserve">
-    <value>Название занято.</value>
-  </data>
-  <data name="NameNotEntered" xml:space="preserve">
-    <value>Требуется название.</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>Нет</value>
@@ -237,20 +195,8 @@
   <data name="Rename" xml:space="preserve">
     <value>Переименовать</value>
   </data>
-  <data name="RenameDeveloperPrompt" xml:space="preserve">
-    <value>Переименовать разработчика?</value>
-  </data>
-  <data name="RenameGenrePrompt" xml:space="preserve">
-    <value>Переименовать жанр?</value>
-  </data>
   <data name="SearchGames" xml:space="preserve">
     <value>Поиск игр</value>
-  </data>
-  <data name="SelectAGenreNTypeTheName" xml:space="preserve">
-    <value>Нужно отметить жанр, который требуется переименовать и ввести имя.</value>
-  </data>
-  <data name="SelectAGenreToDelete" xml:space="preserve">
-    <value>Нужно отметить жанр, который требуется удалить.</value>
   </data>
   <data name="SentSuccessfully" xml:space="preserve">
     <value>Отправлено.</value>
@@ -279,25 +225,13 @@
   <data name="Unsubscribe" xml:space="preserve">
     <value>Отписаться</value>
   </data>
-  <data name="UnsubscribePrompt" xml:space="preserve">
-    <value>Отменить подписку?</value>
-  </data>
-  <data name="UpdateAccountPrompt" xml:space="preserve">
-    <value>Обновить аккаунт?</value>
-  </data>
   <data name="UpdatedSuccessfully" xml:space="preserve">
     <value>Обновлено.</value>
-  </data>
-  <data name="UpdateGamePrompt" xml:space="preserve">
-    <value>Обновить информацию об игре?</value>
   </data>
   <data name="User" xml:space="preserve">
     <value>Пользователь</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Да</value>
-  </data>
-  <data name="YouAreBanned" xml:space="preserve">
-    <value>Похоже, Ваш аккаунт заблокирован. Администратор знает больше.</value>
   </data>
 </root>
