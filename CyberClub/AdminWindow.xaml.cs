@@ -25,6 +25,7 @@ namespace CyberClub
         {
             InitializeComponent();
         }
+
         protected static App Global => Application.Current as App;
 
         #region Grid
@@ -134,6 +135,7 @@ namespace CyberClub
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Owner.Show();
+            Global.User = null;
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -175,6 +177,11 @@ namespace CyberClub
             DataGridTable.ItemsSource = Global.DB.Feedbacks.ToList();
             SetDGColumns(MessagesDGColumns);
             PageFrame.Navigate(MessagesPage);
+        }
+
+        private void UserWindowButton_Checked(object sender, RoutedEventArgs e)
+        {
+            new UserWindow { Owner = this }.ShowDialog();
         }
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e)
