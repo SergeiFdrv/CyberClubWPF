@@ -27,10 +27,9 @@ namespace CyberClub
         public DBContext DB
         {
             get => _DB;
-            set
+            private set
             {
-                if (_DB is DBContext) return;
-                _DB = value;
+                if (_DB is null) _DB = value;
                 if (!_DB.Users.Any())
                 {
                     if (!_DB.Hierarchy.Any())
@@ -52,6 +51,21 @@ namespace CyberClub
                     _DB.SaveChanges();
                 }
             }
+        }
+
+        public Task<DBContext> SetDBAsync()
+        {
+            return Task.Run(() =>
+            {
+                try
+                {
+                    return DB = new DBContext();
+                }
+                catch
+                {
+                    return null;
+                }
+            });
         }
 
         private void Application_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)

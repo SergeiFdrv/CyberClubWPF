@@ -30,29 +30,16 @@ namespace CyberClub
 
         private static App Global => Application.Current as App;
 
-        private void InitDB()
+        private async void InitDB()
         {
-            Voice loadingMsg = new Voice();
-            loadingMsg.ErrorText.Text = "Establishing database connection. Please wait...";
-            loadingMsg.OK.Visibility = loadingMsg.Cancel.Visibility =
-            loadingMsg.Yes.Visibility = loadingMsg.No.Visibility =
-                Visibility.Collapsed;
-            loadingMsg.Show();
-            Task<DBContext> DBTask = new Task<DBContext>(() =>
+            LoginButton.IsEnabled = false;
+            DBContext db = await Global.SetDBAsync();
+            if (db is null)
             {
-                try
-                {
-                    return Global.DB = new DBContext();
-                }
-                catch
-                {
-                    return null;
-                }
-            });
-            DBTask.Start();
-            if (DBTask.Result is null)
-            {
+                Voice loadingMsg = new Voice();
                 loadingMsg.ErrorText.Text = "Database connection failed.";
+                loadingMsg.OK.Visibility = loadingMsg.Yes.Visibility =
+                    loadingMsg.No.Visibility = Visibility.Collapsed;
                 loadingMsg.Cancel.Visibility = Visibility.Visible;
                 loadingMsg.Cancel.Content = "Close";
                 loadingMsg.Cancel.Click += delegate
@@ -60,11 +47,9 @@ namespace CyberClub
                     loadingMsg.Close();
                     Close();
                 };
-                loadingMsg.UpdateLayout();
-                loadingMsg.Hide();
                 loadingMsg.ShowDialog();
             }
-            loadingMsg.Close();
+            LoginButton.IsEnabled = true;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

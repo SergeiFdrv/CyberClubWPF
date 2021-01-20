@@ -33,7 +33,7 @@
                     <TextBox x:Name="LoginInput" Margin="0" Padding="3" Grid.Column="1" VerticalAlignment="Top"/>
                     <TextBlock Margin="0,35,0,0" Grid.Column="0" Padding="4" VerticalAlignment="Top" Text="Пароль"/>
                     <PasswordBox x:Name="PasswordInput" Margin="0,35,0,0" Padding="3" Grid.Column="1" VerticalAlignment="Top"/>
-                    <Button Margin="0,70,0,0" Padding="5" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" Content="Войти" Click="Button_Click"/>
+                    <Button x:Name="LoginButton" Margin="0,70,0,0" Padding="5" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" Content="Войти" Click="Button_Click"/>
                 </Grid>
                 <TextBlock Margin="0" Grid.Row="0" Grid.Column="3" VerticalAlignment="Center">
                 <Span Foreground="Lime">
