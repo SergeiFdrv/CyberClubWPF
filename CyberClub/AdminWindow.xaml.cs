@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using CyberClub.Pages;
+using CyberClub.ViewModels;
 
 namespace CyberClub
 {
@@ -24,6 +25,7 @@ namespace CyberClub
         public AdminWindow()
         {
             InitializeComponent();
+            DataContext = new AdminViewModel();
         }
 
         protected static App Global => Application.Current as App;
