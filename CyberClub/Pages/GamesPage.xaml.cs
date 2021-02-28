@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CyberClub.Controls;
 using System.IO;
+using CyberClub.ViewModels;
 
 namespace CyberClub.Pages
 {
@@ -27,6 +28,7 @@ namespace CyberClub.Pages
         public GamesPage()
         {
             InitializeComponent();
+            DataContext = new GameViewModel();
             UpdateGameItems();
             UpdateDevItems();
             UpdateGenrePickerItems();

@@ -8,6 +8,8 @@
       xmlns:data="clr-namespace:CyberClub.Data" 
       xmlns:res="clr-namespace:CyberClub.AppResources"
       xmlns:control="clr-namespace:CyberClub.Controls"
+      xmlns:vm="clr-namespace:CyberClub.ViewModels"
+      d:DataContext="{d:DesignInstance vm:GameViewModel}"
       mc:Ignorable="d" 
       Style="{StaticResource Pg}" d:DesignWidth="800"
       Title="GamesPage">
@@ -27,14 +29,9 @@
             </Grid.ColumnDefinitions>
             <TextBlock Text="{x:Static res:Lang.Game}"/>
             <DockPanel Grid.Column="1">
-                <ComboBox x:Name="GameIDBox" IsEditable="True" Visibility="Collapsed" SelectionChanged="GameIDBox_SelectionChanged">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding GameID}"/>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-                <TextBox x:Name="GameNameText"/>
+                <ComboBox x:Name="GameIDBox" IsEditable="True" Visibility="Collapsed"
+                          SelectionChanged="GameIDBox_SelectionChanged" ItemsSource="{Binding Games}" SelectedItem="{Binding SelectedGame}"/>
+                <TextBox x:Name="GameNameText" Text="{Binding SelectedGame.GameName}"/>
             </DockPanel>
         </Grid>
         <Grid><!--game path-->
@@ -45,7 +42,7 @@
             <TextBlock Text="{x:Static res:Lang.PathToEXE}"/>
             <DockPanel Grid.Column="1" FlowDirection="RightToLeft">
                 <Button x:Name="PathButton" Content="{x:Static res:Lang.Browse}" MinWidth="150" Click="PathButton_Click"/>
-                <TextBox x:Name="PathText"/>
+                <TextBox x:Name="PathText" Text="{Binding SelectedGame.GameLink}"/>
             </DockPanel>
         </Grid>
         <Grid><!--made by-->
@@ -58,14 +55,9 @@
                 <Button x:Name="DevDelButton" Content="{x:Static res:Lang.Delete}" MinWidth="150" Visibility="Collapsed" Click="DevDelButton_Click"/>
                 <Button x:Name="DevButton" Content="{x:Static res:Lang.Add}" MinWidth="150" Click="DevButton_Click"/>
                 <DockPanel FlowDirection="LeftToRight">
-                    <ComboBox x:Name="DevIDBox" IsEditable="True" SelectionChanged="DevIDBox_SelectionChanged">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Path=DevID}"/>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <TextBox x:Name="DevText"/>
+                    <ComboBox x:Name="DevIDBox" IsEditable="True" SelectionChanged="DevIDBox_SelectionChanged"
+                              ItemsSource="{Binding Devs}" SelectedItem="{Binding SelectedGame.Dev}"/>
+                    <TextBox x:Name="DevText" Text="{Binding SelectedGame.Dev.DevName}"/>
                 </DockPanel>
             </DockPanel>
         </Grid>
@@ -122,9 +114,14 @@
                     </ListBox.Resources>
                 </ListView>
             </DockPanel>
-            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
-                <TextBlock x:Name="SubsInfoText" Text="Subs: 0   Rates: 0   Avg: 0.0"/>
-            </StackPanel>
+            <TextBlock x:Name="SubsInfoText" Text="Subs: 0   Rates: 0   Avg: 0.0">
+                <Run Text="{x:Static res:Lang.SubsRatesAndAvg}"/>
+                <!--<Run Text="{Binding}"/>-->
+                <Run Text="{x:Static res:Lang.SubsRatesAndAvg}"/>
+                <!--<Run Text="{Binding}"/>-->
+                <Run Text="{x:Static res:Lang.SubsRatesAndAvg}"/>
+                <!--<Run Text="{Binding}"/>-->
+            </TextBlock>
         </DockPanel>
         <Grid>
             <Grid.ColumnDefinitions>
