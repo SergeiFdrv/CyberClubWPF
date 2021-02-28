@@ -4,9 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CyberClub"
+        xmlns:viewmodels="clr-namespace:CyberClub.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewmodels:LoginViewModel}"
         mc:Ignorable="d"
         Style="{StaticResource Win}"
         Title="MainWindow" Width="665" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" SizeToContent="Height" Focusable="False" AllowsTransparency="True" WindowStyle="None" Background="Transparent">
+    <Window.InputBindings>
+        <KeyBinding Key="Down" Command="{Binding FocusOnNext}"/>
+    </Window.InputBindings>
     <StackPanel>
         <Border Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Right" Background="DarkRed" Margin="0, 0, 0, -15" Panel.ZIndex="1">
             <Button x:Name="CloseButton" Click="CloseButton_Click" Content="X" Padding="8, 3" BorderBrush="Transparent"/>
