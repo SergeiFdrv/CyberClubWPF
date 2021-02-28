@@ -15,11 +15,12 @@
         <TextBlock x:Name="ErrorText" VerticalAlignment="Top" Margin="0, 0, 0, 12">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </TextBlock>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" FlowDirection="RightToLeft">
-            <Button x:Name="Yes"     Click="Yes_Click"    Margin="4, 0" Padding="12, 5" Content="Yes"/>
-            <Button x:Name="No"      Click="No_Click"     Margin="4, 0" Padding="12, 5" Content="No"/>
-            <Button x:Name="OK"      Click="OK_Click"     Margin="4, 0" Padding="12, 5" Content="OK"/>
-            <Button x:Name="Cancel"  Click="Cancel_Click" Margin="4, 0" Padding="12, 5" Content="Cancel"/>
-        </StackPanel>
+        <DockPanel>
+            <Button x:Name="Yes"     Click="Yes_Click"    DockPanel.Dock="Right" Margin="4, 0, 0, 0" Padding="12, 5" Content="Yes"/>
+            <Button x:Name="No"      Click="No_Click"     DockPanel.Dock="Right" Margin="4, 0, 0, 0" Padding="12, 5" Content="No"/>
+            <Button x:Name="OK"      Click="OK_Click"     DockPanel.Dock="Right" Margin="4, 0, 0, 0" Padding="12, 5" Content="OK"/>
+            <Button x:Name="Cancel"  Click="Cancel_Click" DockPanel.Dock="Right" Margin="4, 0, 0, 0" Padding="12, 5" Content="Cancel"/>
+            <TextBox x:Name="ResponceInput" Visibility="Collapsed"/>
+        </DockPanel>
     </StackPanel>
 </Window>

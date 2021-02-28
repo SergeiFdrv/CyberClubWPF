@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 namespace CyberClub
 {
     /// <summary>
-    /// Логика взаимодействия для Voice.xaml.
+    /// Логика взаимодействия для Voice.xaml.<br/>
     /// Voice — наш "дизайнерский" MessageBox. Ничего лишнего
     /// </summary>
     public partial class Voice : Window
@@ -24,6 +24,8 @@ namespace CyberClub
         {
             InitializeComponent();
         }
+
+        public string ResultString => ResponceInput.Text;
 
         public static MessageBoxResult Say(string text, MessageBoxButton buttons = MessageBoxButton.OK)
         {
@@ -62,6 +64,27 @@ namespace CyberClub
                 else return MessageBoxResult.OK;
             }
             return MessageBoxResult.No;
+        }
+
+        public static MessageBoxResult Prompt(string request, out string response)
+        {
+            var form = new Voice();
+            form.ErrorText.Text = request;
+            form.OK.Visibility = form.Cancel.Visibility = Visibility.Visible;
+            form.Yes.Visibility = form.No.Visibility = Visibility.Collapsed;
+            bool? res = form.ShowDialog();
+            if (res is null)
+            {
+                response = string.Empty;
+                return MessageBoxResult.Cancel;
+            }
+            if (res.Value)
+            {
+                response = form.ResultString;
+                return MessageBoxResult.OK;
+            }
+            response = string.Empty;
+            return MessageBoxResult.Cancel;
         }
 
         private void OK_Click(object sender, RoutedEventArgs e)
