@@ -27,12 +27,12 @@ namespace CyberClub.Pages
 
         public override void OpenFromTable(object obj)
         {
-            if (!(obj is Data.Feedback msg)) return;
-            UserNameText.Text = msg.User is null ? string.Empty :
-                msg.User.UserName + " (" + msg.User.UserID + ')';
-            TimeText.Text = msg.Dt.ToString("G");
-            TopicText.Text = msg.Briefly;
-            TextText.Text = msg.InDetails;
+            if (!(obj is Data.TextMessage msg)) return;
+            UserNameText.Text = msg.Reciever is null ? string.Empty :
+                msg.Reciever.UserName + " (" + msg.Reciever.UserID + ')';
+            TimeText.Text = msg.DT.ToString("G");
+            TopicText.Text = msg.ShortText;
+            TextText.Text = msg.LongText;
         }
 
         protected override void ClearFields()

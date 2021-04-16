@@ -30,9 +30,9 @@ namespace CyberClub.Pages
             InitializeComponent();
             DataContext = new GameViewModel();
             UpdateGameItems();
-            UpdateDevItems();
+            UpdateDeveloperItems();
             UpdateGenrePickerItems();
-            UpdatePicItems();
+            UpdateImageItems();
             UpdateSubsInfo();
         }
 
@@ -40,31 +40,31 @@ namespace CyberClub.Pages
         protected override void SetEditMode(bool value)
         {
             GameIDBox.SelectedItem =
-            DevIDBox.SelectedItem =
-            PicIDBox.SelectedItem = null;
+            DeveloperIDBox.SelectedItem =
+            ImageIDBox.SelectedItem = null;
             if (_IsInEditMode = value)
             {
-                GameIDBox.Visibility = DevDelButton.Visibility =
-                GenreDelButton.Visibility = PicIDBox.Visibility =
+                GameIDBox.Visibility = DeveloperDelButton.Visibility =
+                GenreDelButton.Visibility = ImageIDBox.Visibility =
                 GameButton0.Visibility = SubsInfoText.Visibility =
                     Visibility.Visible;
-                DevButton.Content =
+                DeveloperButton.Content =
                 GenreButton.Content =
-                PicButton0.Content = AppResources.Lang.Rename;
-                PicButton1.Content = AppResources.Lang.Delete;
+                ImageButton0.Content = AppResources.Lang.Rename;
+                ImageButton1.Content = AppResources.Lang.Delete;
                 GameButton1.Content = AppResources.Lang.Delete;
             }
             else
             {
-                GameIDBox.Visibility = DevDelButton.Visibility =
-                GenreDelButton.Visibility = PicIDBox.Visibility =
+                GameIDBox.Visibility = DeveloperDelButton.Visibility =
+                GenreDelButton.Visibility = ImageIDBox.Visibility =
                 GameButton0.Visibility = SubsInfoText.Visibility =
                     Visibility.Collapsed;
-                DevButton.Content =
+                DeveloperButton.Content =
                 GenreButton.Content =
                 GameButton1.Content =
-                PicButton1.Content = AppResources.Lang.Add;
-                PicButton0.Content = AppResources.Lang.Browse;
+                ImageButton1.Content = AppResources.Lang.Add;
+                ImageButton0.Content = AppResources.Lang.Browse;
             }
             ClearFields();
         }
@@ -77,7 +77,7 @@ namespace CyberClub.Pages
         protected override void ClearFields()
         {
             GameNameText.Text = PathText.Text = string.Empty;
-            DevIDBox.SelectedItem = PicIDBox.SelectedItem = null;
+            DeveloperIDBox.SelectedItem = ImageIDBox.SelectedItem = null;
             SPToggle.IsChecked = MPToggle.IsChecked = false;
             foreach (InteractiveListItem i in GenrePicker.Items)
             {
@@ -102,11 +102,11 @@ namespace CyberClub.Pages
         {
             if (!(GameIDBox.SelectedItem is Data.Game game)) return;
             GameNameText.Text = game.GameName;
-            PathText.Text = game.GameLink;
-            DevIDBox.SelectedItem = game.Dev;
-            PicIDBox.SelectedItem = game.Pic;
-            SPToggle.IsChecked = game.Singleplayer;
-            MPToggle.IsChecked = game.Multiplayer;
+            PathText.Text = game.GameExePath;
+            DeveloperIDBox.SelectedItem = game.DeveloperID;
+            ImageIDBox.SelectedItem = game.Image;
+            SPToggle.IsChecked = game.IsSingleplayer;
+            MPToggle.IsChecked = game.IsMultiplayer;
             UpdateGenrePickerItems(game);
             UpdateSubsInfo(game);
         }
@@ -126,25 +126,25 @@ namespace CyberClub.Pages
         #endregion
 
         #region Developer
-        private void DevIDBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void DeveloperIDBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            DevText.Text = (DevIDBox.SelectedItem as Data.Dev)?.DevName;
+            DeveloperText.Text = (DeveloperIDBox.SelectedItem as Data.Developer)?.DeveloperName;
         }
 
-        private void DevButton_Click(object sender, RoutedEventArgs e)
+        private void DeveloperButton_Click(object sender, RoutedEventArgs e)
         {
             if (IsInEditMode) RenameDeveloper();
             else AddDeveloper();
         }
 
-        private void DevDelButton_Click(object sender, RoutedEventArgs e)
+        private void DeveloperDelButton_Click(object sender, RoutedEventArgs e)
         {
             if (Voice.Say(AppResources.Question.DeleteDeveloper, MessageBoxButton.YesNo) ==
                 MessageBoxResult.Yes)
             {
-                Global.DB.Devs.Remove(DevIDBox.SelectedItem as Data.Dev);
+                Global.DB.Developers.Remove(DeveloperIDBox.SelectedItem as Data.Developer);
                 Global.DB.SaveChanges();
-                UpdateDevItems();
+                UpdateDeveloperItems();
             }
         }
 
@@ -153,41 +153,41 @@ namespace CyberClub.Pages
         /// Если возможно, по имени находит в базе данных разработчика.
         /// Иначе добавляет нового разработчика с именем name и возвращает его.
         /// </summary>
-        private Data.Dev AddGetDev(string name)
+        private Data.Developer AddGetDeveloper(string name)
         {
             if (name.Length == 0) return null;
-            Data.Dev dev = Global.DB.Devs.FirstOrDefault(i => i.DevName == name);
+            Data.Developer dev = Global.DB.Developers.FirstOrDefault(i => i.DeveloperName == name);
             if (dev is null)
             {
-                dev = Global.DB.Devs.Add(new Data.Dev
+                dev = Global.DB.Developers.Add(new Data.Developer
                 {
-                    DevName = name
+                    DeveloperName = name
                 });
                 Global.DB.SaveChanges();
-                UpdateDevItems();
+                UpdateDeveloperItems();
             }
             return dev;
         }
 
         private void RenameDeveloper()
         {
-            if (!string.IsNullOrWhiteSpace(DevText.Text) &&
+            if (!string.IsNullOrWhiteSpace(DeveloperText.Text) &&
             Voice.Say(AppResources.Question.RenameDeveloper, MessageBoxButton.YesNo) ==
             MessageBoxResult.Yes)
             {
-                (DevIDBox.SelectedItem as Data.Dev).DevName = DevText.Text;
+                (DeveloperIDBox.SelectedItem as Data.Developer).DeveloperName = DeveloperText.Text;
                 Global.DB.SaveChanges();
             }
         }
 
         private void AddDeveloper()
         {
-            if (AddGetDev(DevText.Text) is null) Voice.Say(AppResources.Error.AddError);
-            DevText.Text = string.Empty;
+            if (AddGetDeveloper(DeveloperText.Text) is null) Voice.Say(AppResources.Error.AddError);
+            DeveloperText.Text = string.Empty;
         }
-        private void UpdateDevItems()
+        private void UpdateDeveloperItems()
         {
-            DevIDBox.ItemsSource = Global.DB.Devs.ToList();
+            DeveloperIDBox.ItemsSource = Global.DB.Developers.ToList();
         }
         #endregion
         #endregion
@@ -266,46 +266,46 @@ namespace CyberClub.Pages
         #endregion
 
         #region Picture
-        private void PicIDBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ImageIDBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Data.Pic pic = PicIDBox.SelectedItem as Data.Pic;
+            Data.Image pic = ImageIDBox.SelectedItem as Data.Image;
             ImageBox.Source = LoadImage(pic?.Bin);
-            PicNameText.Text = pic?.PicName;
+            ImageNameText.Text = pic?.ImageName;
         }
 
-        private void PicButton0_Click(object sender, RoutedEventArgs e)
+        private void ImageButton0_Click(object sender, RoutedEventArgs e)
         {
             if (IsInEditMode) RenameImage();
             else OpenImageFromDialog();
         }
 
-        private void PicButton1_Click(object sender, RoutedEventArgs e)
+        private void ImageButton1_Click(object sender, RoutedEventArgs e)
         {
             if (IsInEditMode) DeleteImage();
             else AddImage();
         }
 
         #region Image details
-        private Data.Pic AddGetPic(string name)
+        private Data.Image AddGetImage(string name)
         { // Добавить картинку в БД
             if (name.Length == 0) return null;
             ImageSourceConverter imageSourceConverter = new ImageSourceConverter();
             byte[] imageBin = 
                 (byte[])imageSourceConverter.ConvertTo(ImageBox.Source, typeof(byte[]));
-            Data.Pic pic = new Data.Pic
+            Data.Image pic = new Data.Image
             {
-                PicName = PicNameText.Text,
+                ImageName = ImageNameText.Text,
                 Bin = imageBin
             };
-            pic = Global.DB.Pics.Add(pic);
+            pic = Global.DB.Images.Add(pic);
             Global.DB.SaveChanges();
-            UpdatePicItems();
+            UpdateImageItems();
             return pic;
         }
 
-        private void UpdatePicItems()
+        private void UpdateImageItems()
         {
-            PicIDBox.ItemsSource = Global.DB.Pics.ToList();
+            ImageIDBox.ItemsSource = Global.DB.Images.ToList();
         }
 
         private static BitmapImage LoadImage(byte[] imageData)
@@ -327,9 +327,9 @@ namespace CyberClub.Pages
 
         private void RenameImage()
         {
-            if (!string.IsNullOrWhiteSpace(PicNameText.Text))
+            if (!string.IsNullOrWhiteSpace(ImageNameText.Text))
             {
-                (PicIDBox.SelectedItem as Data.Pic).PicName = PicNameText.Text;
+                (ImageIDBox.SelectedItem as Data.Image).ImageName = ImageNameText.Text;
                 Global.DB.SaveChanges();
             }
         }
@@ -349,7 +349,7 @@ namespace CyberClub.Pages
                 bitmapImage.UriSource = new Uri(openFileDialog.FileName);
                 bitmapImage.EndInit();
                 ImageBox.Source = bitmapImage;
-                PicNameText.Text = openFileDialog.FileName
+                ImageNameText.Text = openFileDialog.FileName
                     .Remove(0, openFileDialog.FileName.LastIndexOf('\\') + 1);
             }
         }
@@ -359,15 +359,15 @@ namespace CyberClub.Pages
             if (Voice.Say(AppResources.Question.DeleteImage, MessageBoxButton.YesNo) ==
                 MessageBoxResult.Yes)
             {
-                Global.DB.Pics.Remove(PicIDBox.SelectedItem as Data.Pic);
+                Global.DB.Images.Remove(ImageIDBox.SelectedItem as Data.Image);
                 Global.DB.SaveChanges();
-                UpdatePicItems();
+                UpdateImageItems();
             }
         }
 
         private void AddImage()
         {
-            Voice.Say(AddGetPic(PicNameText.Text) is null ?
+            Voice.Say(AddGetImage(ImageNameText.Text) is null ?
                 AppResources.Error.NameNotEntered : AppResources.Lang.AddedSuccessfully);
         }
         #endregion
@@ -414,12 +414,12 @@ namespace CyberClub.Pages
             {
                 game.GameName = GameNameText.Text;
             }
-            game.GameLink = PathText.Text;
-            game.Dev = DevIDBox.SelectedItem as Data.Dev;
-            game.Pic = PicIDBox.SelectedItem as Data.Pic;
+            game.GameExePath = PathText.Text;
+            game.Developer = DeveloperIDBox.SelectedItem as Data.Developer;
+            game.Image = ImageIDBox.SelectedItem as Data.Image;
             game.Genres = GetTickedGenres();
-            game.Singleplayer = SPToggle.IsChecked;
-            game.Multiplayer = MPToggle.IsChecked;
+            game.IsSingleplayer = SPToggle.IsChecked;
+            game.IsMultiplayer = MPToggle.IsChecked;
             Global.DB.SaveChanges();
         }
 
@@ -441,11 +441,11 @@ namespace CyberClub.Pages
             Data.Game game = new Data.Game
             {
                 GameName = GameNameText.Text,
-                Dev = AddGetDev(DevText.Text),
-                GameLink = PathText.Text,
-                Pic = AddGetPic(PicNameText.Text),
-                Singleplayer = SPToggle.IsChecked,
-                Multiplayer = MPToggle.IsChecked,
+                Developer = AddGetDeveloper(DeveloperText.Text),
+                GameExePath = PathText.Text,
+                Image = AddGetImage(ImageNameText.Text),
+                IsSingleplayer = SPToggle.IsChecked,
+                IsMultiplayer = MPToggle.IsChecked,
                 Genres = GetTickedGenres()
             };
             Global.DB.Games.Add(game);

@@ -8,7 +8,6 @@ namespace CyberClub.Data
 
     public partial class Game
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Game()
         {
             Subscriptions = new HashSet<Subscription>();
@@ -21,25 +20,24 @@ namespace CyberClub.Data
         [StringLength(50)]
         public string GameName { get; set; }
 
-        public int? MadeBy { get; set; }
+        [Column("Developer")]
+        public int? DeveloperID { get; set; }
 
         [StringLength(255)]
-        public string GameLink { get; set; }
+        public string GameExePath { get; set; }
 
-        public int? GamePic { get; set; }
+        public int? GameIcon { get; set; }
 
-        public bool? Singleplayer { get; set; }
+        public bool? IsSingleplayer { get; set; }
 
-        public bool? Multiplayer { get; set; }
+        public bool? IsMultiplayer { get; set; }
 
-        public virtual Dev Dev { get; set; }
+        public virtual Developer Developer { get; set; }
 
-        public virtual Pic Pic { get; set; }
+        public virtual Image Image { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Subscription> Subscriptions { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Genre> Genres { get; set; }
     }
 }

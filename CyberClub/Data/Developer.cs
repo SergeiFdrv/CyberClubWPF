@@ -6,21 +6,19 @@ namespace CyberClub.Data
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Dev
+    public partial class Developer
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Dev()
+        public Developer()
         {
             Games = new HashSet<Game>();
         }
 
-        public int DevID { get; set; }
+        public int DeveloperID { get; set; }
 
         [Required]
         [StringLength(50)]
-        public string DevName { get; set; }
+        public string DeveloperName { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Game> Games { get; set; }
     }
 }

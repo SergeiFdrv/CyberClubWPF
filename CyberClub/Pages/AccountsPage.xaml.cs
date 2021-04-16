@@ -24,7 +24,6 @@ namespace CyberClub.Pages
         {
             InitializeComponent();
             UpdateAccountItems();
-            LevelBox.ItemsSource = Global.DB.Hierarchy.ToList();
         }
 
         public override void OpenFromTable(object obj)
@@ -88,10 +87,10 @@ namespace CyberClub.Pages
         {
             if (!(UserIDBox.SelectedItem is Data.User user)) return;
             UserNameText.Text = user.UserName;
-            EmailText.Text = user.EMail;
-            AboutText.Text = user.Info;
-            LevelBox.SelectedItem = user.Hierarchy;
-            Password = user.Passwd;
+            EmailText.Text = user.Email;
+            AboutText.Text = user.About;
+            LevelBox.SelectedItem = user.UserLevel;
+            Password = user.UserPass;
         }
 
         private void UserIDBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -119,10 +118,10 @@ namespace CyberClub.Pages
             Data.User user = new Data.User
             {
                 UserName = UserNameText.Text,
-                EMail = EmailText.Text,
-                Info = AboutText.Text,
-                Passwd = Password,
-                Hierarchy = LevelBox.SelectedItem as Data.Hierarchy
+                Email = EmailText.Text,
+                About = AboutText.Text,
+                UserPass = Password,
+                UserLevel = (Data.UserLevel)LevelBox.SelectedItem
             };
             Global.DB.Users.Add(user);
             Global.DB.SaveChanges();
@@ -140,10 +139,10 @@ namespace CyberClub.Pages
             {
                 user.UserName = UserNameText.Text;
             }
-            user.EMail = EmailText.Text;
-            user.Info = AboutText.Text;
-            user.Passwd = Password;
-            user.Hierarchy = LevelBox.SelectedItem as Data.Hierarchy;
+            user.Email = EmailText.Text;
+            user.About = AboutText.Text;
+            user.UserPass = Password;
+            user.UserLevel = (Data.UserLevel)LevelBox.SelectedItem;
             Global.DB.SaveChanges();
         }
 

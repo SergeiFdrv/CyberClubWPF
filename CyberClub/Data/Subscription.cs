@@ -11,16 +11,16 @@ namespace CyberClub.Data
         [Key]
         [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Who { get; set; }
+        public int Subscriber { get; set; }
 
         [Key]
-        [Column(Order = 1)]
+        [Column("Game", Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Game { get; set; }
+        public int GameID { get; set; }
 
         public byte? Rate { get; set; }
 
-        public virtual Game Game1 { get; set; }
+        public virtual Game Game { get; set; }
 
         public virtual User User { get; set; }
     }

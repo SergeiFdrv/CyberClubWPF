@@ -32,24 +32,24 @@ namespace CyberClub.ViewModels
             }
         }
 
-        private ObservableCollection<Dev> _Devs;
-        public ObservableCollection<Dev> Devs
+        private ObservableCollection<Developer> _Developers;
+        public ObservableCollection<Developer> Developers
         {
-            get => _Devs ?? (_Devs = new ObservableCollection<Dev>(Global.DB.Devs));
+            get => _Developers ?? (_Developers = new ObservableCollection<Developer>(Global.DB.Developers));
             set
             {
-                _Devs = value;
+                _Developers = value;
                 OnPropertyChanged();
             }
         }
 
-        private Dev _SelectedDev;
-        public Dev SelectedDev
+        private Developer _SelectedDeveloper;
+        public Developer SelectedDeveloper
         {
-            get => _SelectedDev ?? (_SelectedDev = new Dev());
+            get => _SelectedDeveloper ?? (_SelectedDeveloper = new Developer());
             set
             {
-                _SelectedDev = value;
+                _SelectedDeveloper = value;
                 OnPropertyChanged();
             }
         }

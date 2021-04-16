@@ -56,16 +56,15 @@ namespace CyberClub
         {
             if (string.IsNullOrEmpty(LoginInput.Text)) return;
             Global.User = Global.DB.Users.FirstOrDefault(user =>
-                user.UserName == LoginInput.Text &&
-                user.Passwd == PasswordInput.Password);
-            if (Global.User is null)
+                user.UserName == LoginInput.Text);
+            if (Global.User is null || Global.User.UserPass != PasswordInput.Password)
             {
                 Voice.Say(Error.LoginPasswordNotFound);
                 return;
             }
             LoginInput.Text = PasswordInput.Password = string.Empty;
-            string authname = Global.DB.Hierarchy.Where(level => 
-                level.AuthID == Global.User.Authority).First().AuthName;
+            string authname = "admin";//Global.DB.Hierarchy.Where(level => 
+                //level.AuthID == Global.User.Authority).First().AuthName;
             if (authname == "banned")
             {
                 Voice.Say(Error.YouAreBanned);

@@ -11,8 +11,9 @@ namespace CyberClub.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            Feedbacks = new HashSet<Feedback>();
             Subscriptions = new HashSet<Subscription>();
+            InTextMessages = new HashSet<TextMessage>();
+            OutTextMessages = new HashSet<TextMessage>();
         }
 
         public int UserID { get; set; }
@@ -22,22 +23,27 @@ namespace CyberClub.Data
         public string UserName { get; set; }
 
         [StringLength(64)]
-        public string EMail { get; set; }
-
-        [StringLength(200)]
-        public string Info { get; set; }
-
-        public int? Authority { get; set; }
+        public string Email { get; set; }
 
         [StringLength(255)]
-        public string Passwd { get; set; }
+        public string About { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Feedback> Feedbacks { get; set; }
+        [EnumDataType(typeof(UserLevel))]
+        [Required]
+        public UserLevel UserLevel { get; set; } = UserLevel.Admin;
 
-        public virtual Hierarchy Hierarchy { get; set; }
+        [StringLength(255)]
+        public string UserPass { get; set; }
+
+        public DateTime? LastLogin { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Subscription> Subscriptions { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TextMessage> InTextMessages { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TextMessage> OutTextMessages { get; set; }
     }
 }

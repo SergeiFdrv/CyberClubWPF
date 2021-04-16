@@ -32,21 +32,11 @@ namespace CyberClub
                 if (_DB is null) _DB = value;
                 if (!_DB.Users.Any())
                 {
-                    if (!_DB.Hierarchy.Any())
-                    {
-                        _DB.Hierarchy.AddRange(new List<Hierarchy>
-                            {
-                                new Hierarchy { AuthName = "admin" },
-                                new Hierarchy { AuthName = "banned" },
-                                new Hierarchy { AuthName = "user" }
-                            });
-                        _DB.SaveChanges();
-                    }
                     _DB.Users.Add(
                         new User
                         {
-                            UserName = "Admin", Passwd = string.Empty,
-                            Hierarchy = _DB.Hierarchy.FirstOrDefault(i => i.AuthName == "admin")
+                            UserName = "Admin", UserPass = string.Empty,
+                            UserLevel = UserLevel.Admin
                         });
                     _DB.SaveChanges();
                 }

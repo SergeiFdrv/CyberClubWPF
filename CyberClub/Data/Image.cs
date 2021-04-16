@@ -6,24 +6,22 @@ namespace CyberClub.Data
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Pic
+    public partial class Image
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Pic()
+        public Image()
         {
             Games = new HashSet<Game>();
         }
 
-        public int PicID { get; set; }
+        public int ImageID { get; set; }
 
         [Required]
         [StringLength(255)]
-        public string PicName { get; set; }
+        public string ImageName { get; set; }
 
         [Required]
         public byte[] Bin { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Game> Games { get; set; }
     }
 }

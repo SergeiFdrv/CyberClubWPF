@@ -1,8 +1,8 @@
 ﻿namespace CyberClub.Data
 {
-    public partial class Dev
+    public partial class Developer
     {
-        public override string ToString() => DevID.ToString();
+        public override string ToString() => DeveloperID.ToString();
     }
     public partial class Game
     {
@@ -12,12 +12,19 @@
     {
         public override string ToString() => GenreName;
     }
-    public partial class Pic
+    public partial class Image
     {
-        public override string ToString() => PicID.ToString();
+        public override string ToString() => ImageID.ToString();
     }
     public partial class User
     {
         public override string ToString() => UserID.ToString();
+    }
+
+    public enum UserLevel
+    {
+        Admin = 0,
+        Player = 1,
+        Banned = 2
     }
 }

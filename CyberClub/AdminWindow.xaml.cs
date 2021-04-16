@@ -50,7 +50,7 @@ namespace CyberClub
                 new DataGridTextColumn
                 {
                     Header = "Developed by",
-                    Binding = new Binding("Dev.DevName")
+                    Binding = new Binding("Developer1.DeveloperName")
                 },
                 new DataGridTextColumn
                 {
@@ -176,7 +176,7 @@ namespace CyberClub
         {
             TableTabButton.IsChecked = true;
             ChangeTab(MessagesButton, GamesButton, AccountsButton);
-            DataGridTable.ItemsSource = Global.DB.Feedbacks.ToList();
+            DataGridTable.ItemsSource = Global.DB.TextMessages.ToList();
             SetDGColumns(MessagesDGColumns);
             PageFrame.Navigate(MessagesPage);
         }
